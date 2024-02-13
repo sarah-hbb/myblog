@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/user.routes.js");
+const authRoutes = require("./routes/auth.routes.js");
 
 dotenv.config();
 
@@ -15,7 +16,8 @@ const app = express();
 app.listen(3000, () => {
   console.log("Server is running on port 3000...");
 });
+// to use json format for input of the backend
+app.use(express.json());
 
 app.use("/api/user", userRoutes);
-
-// app.use("/api/user",(req,res)=>{res.json({"Api is working"})})
+app.use("/api/auth", authRoutes);

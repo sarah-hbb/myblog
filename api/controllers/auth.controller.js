@@ -1,7 +1,8 @@
 const User = require("../models/user.model.js");
 const bcryptjs = require("bcryptjs");
+const errorHandler = require("../utils/error.js");
 
-const signup = async (req, res) => {
+const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
   if (
     !username ||
@@ -11,7 +12,8 @@ const signup = async (req, res) => {
     email === "" ||
     password === ""
   ) {
-    return res.status(400).json({ message: "All fields are required" });
+    // return new error
+    next(errorHandler(400, "All fields are required"));
   }
 
   // how to hide the passwords on database using bcryptjs
@@ -28,7 +30,7 @@ const signup = async (req, res) => {
     await newUser.save();
     res.json("Successful Signup");
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    next(err);
   }
 };
 

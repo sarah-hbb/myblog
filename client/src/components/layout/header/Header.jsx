@@ -10,7 +10,7 @@ import SigninButton from "./SigninButton";
 const Header = () => {
   const [signedIn, setSignedIn] = useState(false);
   return (
-    <div className="lg:py-4 lg:px-5% px-3 py-3  bg-cyan-900 text-cyan-100 flex justify-between items-center gap-4 fixed w-full">
+    <div className="lg:py-4 lg:px-5% px-3 py-3  bg-cyan-900 text-cyan-100 flex fixed justify-between items-center gap-4 w-full">
       <Link to="/" className="flex sm:gap-4 gap-2 items-center">
         <img
           src={logo}

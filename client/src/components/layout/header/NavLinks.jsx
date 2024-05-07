@@ -10,9 +10,9 @@ const NavLinks = ({ className, isInSideBar }) => {
           : ""
       }`}
     >
-      <TextLink path="/" text="Home" />
-      <TextLink path="/about" text="About" />
-      <TextLink path="/projects" text="Projects" />
+      <TextLink path="/">Home</TextLink>
+      <TextLink path="/about">About</TextLink>
+      <TextLink path="/projects">Projects</TextLink>
     </div>
   );
 };

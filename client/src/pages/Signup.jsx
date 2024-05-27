@@ -59,7 +59,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4 gap-3">
+    <div className="flex items-center justify-center p-4 gap-3">
       <div className=" md:flex hidden flex-col p-3 items-center justify-center flex-1">
         <img
           src={logo}

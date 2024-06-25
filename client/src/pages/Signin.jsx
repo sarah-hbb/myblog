@@ -3,9 +3,14 @@ import { useNavigate } from "react-router-dom";
 import Input from "../components/ui/Input";
 import logo from "../assets/logo.png";
 import Button from "../components/ui/Button";
-import { FcGoogle } from "react-icons/fc";
 import TextLink from "../components/ui/TextLink";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Signin = () => {
   const [formData, setFormData] = useState({
@@ -13,11 +18,17 @@ const Signin = () => {
     email: "",
     password: "",
   });
-  const [errorMessage, setErrorMesssage] = useState(null);
+
+  // const [errorMessage, setErrorMesssage] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // 🌐🌐🌐 instead: using global state from userSlice
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
+
   const [submitClicked, setSubmitClicked] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const handleChange = (input, id) => {
     setFormData({ ...formData, [id]: input.trim() });
@@ -27,12 +38,14 @@ const Signin = () => {
     e.preventDefault();
     setSubmitClicked(true);
     if (formData.email === "" || formData.password === "") {
-      setErrorMesssage("Please fill out all fields!");
-      return;
+      //setErrorMesssage(""); 🌐🌐🌐
+      return dispatch(signInFailure("Please fill out all fields!"));
     }
     try {
-      setLoading(true);
-      setErrorMesssage(null);
+      // setLoading(true);
+      // setErrorMesssage(null);
+      // 🌐🌐🌐
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -40,17 +53,22 @@ const Signin = () => {
       });
       const data = await res.json();
       if (data.success === false) {
-        setErrorMesssage(data.message);
-        setLoading(false);
+        // setLoading(false)
+        // setErrorMesssage(data.message);
+        //🌐🌐🌐
+        dispatch(signInFailure(data.message));
         return;
       }
 
       if (res.ok) {
+        dispatch(signInSuccess(data));
         navigate("/");
       }
     } catch (error) {
-      setErrorMesssage(error.message);
-      setLoading(false);
+      // setErrorMesssage(error.message);
+      // setLoading(false);
+      //🌐🌐🌐
+      dispatch(signInFailure(error.message));
     }
   };
 
@@ -100,7 +118,7 @@ const Signin = () => {
             )}
           </Button>
           <h3>
-            Dont have an account?
+            Don't have an account?
             <span>
               <TextLink path={"/signup"} className={"text-blue-400"}>
                 {" "}

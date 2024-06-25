@@ -1,6 +1,14 @@
 import React from "react";
 
-const Input = ({ value, label, type, onChange, id, borderError }) => {
+const Input = ({
+  value,
+  label,
+  type,
+  onChange,
+  id,
+  borderError,
+  placeholder,
+}) => {
   const changeHandler = (e) => {
     onChange(e.target.value, e.target.id);
   };
@@ -8,6 +16,7 @@ const Input = ({ value, label, type, onChange, id, borderError }) => {
     <div className="flex flex-col">
       <label className=" text-cyan-600 font-bold mb-1">{label}</label>
       <input
+        placeholder={placeholder}
         id={id}
         type={type}
         value={value}

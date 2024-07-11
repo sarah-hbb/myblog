@@ -11,6 +11,7 @@ import {
   signInFailure,
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import OAuth from "../components/OAuth";
 
 const Signin = () => {
   const [formData, setFormData] = useState({
@@ -117,6 +118,7 @@ const Signin = () => {
               "Sign in"
             )}
           </Button>
+          <OAuth />
           <h3>
             Don't have an account?
             <span>

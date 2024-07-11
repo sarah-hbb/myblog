@@ -6,6 +6,7 @@ import Button from "../components/ui/Button";
 import { FcGoogle } from "react-icons/fc";
 import TextLink from "../components/ui/TextLink";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+import OAuth from "../components/OAuth";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -109,12 +110,7 @@ const Signup = () => {
               "Sign Up"
             )}
           </Button>
-          <Button type="text" inverseColor className={""}>
-            <div className=" inline-flex">
-              <FcGoogle className=" text-2xl mr-4" />
-              Continue with Google
-            </div>
-          </Button>
+          <OAuth />
           <h3>
             Have an account?
             <span>

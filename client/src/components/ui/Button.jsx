@@ -18,7 +18,7 @@ const Button = ({
         hover:border-2 focus:border-2 border-cyan-600  ${
           inverseColor
             ? "bg-cyan-100 text-cyan-900 hover:bg-black hover:text-white"
-            : "bg-gradient-to-r from-cyan-100 to-cyan-900 text-blac"
+            : "bg-gradient-to-r from-cyan-100 to-cyan-900 text-black"
         } `}
     >
       {children}

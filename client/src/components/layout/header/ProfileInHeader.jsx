@@ -35,7 +35,7 @@ const ProfileInHeader = ({ currentUser }) => {
       <div
         className={`
         ${showProfileDropDown ? "block" : "hidden "}
-        absolute right-0 mt-3  text-cyan-600 shadow-cyan-900 shadow-2xl 
+        absolute right-0 mt-3  text-cyan-600 shadow-cyan-900 shadow-2xl rounded-lg
         before:border-solid
         before:border-r-8 before:border-r-transparent
         before:border-l-8 before:border-l-transparent

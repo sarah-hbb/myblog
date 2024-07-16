@@ -1,16 +1,18 @@
-import React, { useState } from "react";
 import logo from "../../../assets/logo.png";
 import { Link } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import BurgerMenu from "./BurgerMenu";
-import AvatarIcon from "../../ui/AvatarIcon";
 import NavLinks from "./NavLinks";
 import SigninButton from "./SigninButton";
+import { useSelector } from "react-redux";
+import ProfileInHeader from "./ProfileInHeader";
 
 const Header = () => {
-  const [signedIn, setSignedIn] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
+  console.log(currentUser);
+
   return (
-    <div className="lg:py-4 lg:px-5% px-3 py-3  bg-cyan-900 text-cyan-100 flex justify-between items-center gap-4 w-full">
+    <div className="lg:py-4 lg:px-5% p-3  bg-cyan-900 text-cyan-100 flex justify-between items-center gap-4 w-full">
       <Link to="/" className="flex sm:gap-4 gap-2 items-center">
         <img
           src={logo}
@@ -24,7 +26,11 @@ const Header = () => {
       <Searchbar />
       <NavLinks className="gap-4 lg:gap-10 sm:flex hidden items-center" />
       <div className="flex sm:flex-row-reverse items-center transition-all gap-4">
-        {signedIn ? <AvatarIcon /> : <SigninButton />}
+        {currentUser ? (
+          <ProfileInHeader currentUser={currentUser} />
+        ) : (
+          <SigninButton />
+        )}
         <BurgerMenu />
       </div>
     </div>

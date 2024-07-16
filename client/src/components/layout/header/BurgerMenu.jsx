@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SidebarMenu from "./SidebarMenu";
 // hamburger height = h-1 + gap-1.5 + h-1 + gap-1.5 + h-1 = 6
 // diagonal =  6* root of 2
@@ -6,20 +6,36 @@ import SidebarMenu from "./SidebarMenu";
 
 const BurgerMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef();
+
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen((prv) => !prv);
   };
-  const handleOpenMenu = () => {};
+
+  // close sidebar menu when clicking outside of the sidebar
+  useEffect(() => {
+    const handler = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener("click", handler);
+
+    return () => {
+      document.removeEventListener("click", handler);
+    };
+  }, [menuRef]);
+
   return (
-    <div className="flex-col">
-      <div className="sm:hidden cursor-pointer w-8" onClick={toggleMenu}>
+    <div className="flex-col" ref={menuRef}>
+      <div className="sm:hidden w-8" onClick={toggleMenu}>
         <div
           className={`flex flex-col gap-1.5 origin-left
         before:w-8 before:h-1 before:bg-cyan-100 before:rounded-sm before:origin-left before:translate-x-0 before:-translate-y-1/2 before:transition-all
         after:w-8 after:h-1 after:bg-cyan-100 after:rounded-sm after:origin-left after:translate-x-0 after:translate-y-1/2 after:transition-all
         ${
           isMenuOpen
-            ? "before:rotate-45 before:w-burger-diag after:-rotate-45 after:w-burger-diag "
+            ? "before:rotate-45 before:w-burger-diag after:-rotate-45 after:w-burger-diag"
             : ""
         }
         `}

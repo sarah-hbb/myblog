@@ -1,18 +1,11 @@
 import React from "react";
-import { IoPersonCircle } from "react-icons/io5";
 
-const AvatarIcon = ({ size }) => {
+const AvatarIcon = ({ avatarPicture }) => {
   return (
-    <IoPersonCircle
-      className={`${
-        size === "sm"
-          ? "text-2xl"
-          : size === "md"
-          ? "text-4xl"
-          : size === "lg"
-          ? "text-5xl"
-          : ""
-      }`}
+    <img
+      alt=""
+      src={avatarPicture}
+      className="w-10 h-10  rounded-full object-contain border-2 border-cyan-100"
     />
   );
 };

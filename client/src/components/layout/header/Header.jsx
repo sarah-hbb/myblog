@@ -9,7 +9,6 @@ import ProfileInHeader from "./ProfileInHeader";
 
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
 
   return (
     <div className="lg:py-4 lg:px-5% p-3  bg-cyan-900 text-cyan-100 flex justify-between items-center gap-4 w-full">

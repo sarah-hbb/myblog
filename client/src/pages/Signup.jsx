@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Input from "../components/ui/Input";
 import logo from "../assets/logo.png";
 import Button from "../components/ui/Button";
-import { FcGoogle } from "react-icons/fc";
 import TextLink from "../components/ui/TextLink";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import OAuth from "../components/OAuth";
@@ -20,8 +19,8 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
-  const handleChange = (input, id) => {
-    setFormData({ ...formData, [id]: input.trim() });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
 
   const handleSubmit = async (e) => {

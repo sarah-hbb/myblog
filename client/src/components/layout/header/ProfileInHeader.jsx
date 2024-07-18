@@ -31,7 +31,7 @@ const ProfileInHeader = ({ currentUser }) => {
       onClick={toggleDropDown}
       ref={dropDownRef}
     >
-      <AvatarIcon avatarPicture={currentUser.profilePicture} />
+      <AvatarIcon avatarPicture={currentUser.profilePicture} size={"small"} />
       <div
         className={`
         ${showProfileDropDown ? "block" : "hidden "}

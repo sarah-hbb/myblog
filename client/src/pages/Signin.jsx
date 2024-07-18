@@ -31,8 +31,8 @@ const Signin = () => {
 
   const dispatch = useDispatch();
 
-  const handleChange = (input, id) => {
-    setFormData({ ...formData, [id]: input.trim() });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
 
   const handleSubmit = async (e) => {

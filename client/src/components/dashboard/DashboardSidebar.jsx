@@ -17,7 +17,11 @@ const DashboardSidebar = ({ className }) => {
   }, [location.search]);
 
   return (
-    <div className=" flex flex-col gap-2 p-2 min-h-full border-r-2 ">
+    <div
+      className="flex flex-col gap-4 p-2 
+        min-h-full border-b-2 w-full
+        sm:w-60 sm:border-r-2 sm:border-b-0"
+    >
       <Link to="/dashboard?tab=profile">
         <DashboardSidebarTab
           icon={<IoPersonCircleSharp />}

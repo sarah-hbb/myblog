@@ -20,7 +20,7 @@ const Dashboard = () => {
   }, [location.search]);
 
   return (
-    <div className="flex-1 flex flex-row gap-4 p-2">
+    <div className="flex-1 flex flex-col sm:flex-row gap-4">
       {/* Sidebar */}
       <div>
         <DashboardSidebar />

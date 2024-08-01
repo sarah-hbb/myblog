@@ -8,6 +8,7 @@ const Input = ({
   id,
   borderError,
   placeholder,
+  defaultValue,
 }) => {
   return (
     <div className="flex flex-col">
@@ -17,6 +18,7 @@ const Input = ({
         id={id}
         type={type}
         value={value}
+        defaultValue={defaultValue}
         className={`rounded-md h-10 p-4 border-2 text-gray-400 ${
           borderError ? "border-red-400" : " border-gray-200"
         } border-gray-200 focus:border-cyan-600 outline-none`}

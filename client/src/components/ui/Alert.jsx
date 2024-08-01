@@ -6,7 +6,7 @@ const Alert = ({ children, status }) => {
       className={`${
         status === "failure"
           ? "bg-red-200 text-red-700"
-          : status === "sucess"
+          : status === "success"
           ? "bg-green-200 text-green-700"
           : ""
       } w-full py-2 px-3 rounded-lg`}

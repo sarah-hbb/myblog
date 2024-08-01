@@ -13,20 +13,68 @@ import Button from "../ui/Button";
 import Alert from "../ui/Alert";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import {
+  updateStart,
+  updateSuccess,
+  updateFailure,
+} from "../../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const DashboardProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
+
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
-  const [value, setValue] = useState("");
   const [imageFileUploadingProgress, setImageFileUploadingProgress] =
     useState(null);
+  const [imageFileUoloading, setImageFileUploading] = useState(false);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [updateErrorMessage, setUpdateErrorMessage] = useState(null);
+  const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
 
   const filePickerRef = useRef();
 
+  const dispatch = useDispatch();
+
   const handleInputChange = (e) => {
-    setValue(e.target.value);
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleUserUpdateSubmit = async (e) => {
+    e.preventDefault();
+    setUpdateErrorMessage(null);
+    setUpdateUserSuccess(null);
+    if (Object.keys(formData).length === 0) {
+      setUpdateErrorMessage("No changes made tp your profile!");
+      return;
+    }
+    if (imageFileUoloading) {
+      setUpdateErrorMessage("Please wait for image to upload 100%");
+      return;
+    }
+    try {
+      dispatch(updateStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        dispatch(updateFailure(data.message));
+        setUpdateErrorMessage(data.message);
+      } else {
+        dispatch(updateSuccess(data));
+        setUpdateUserSuccess("User's profile updated successfully");
+      }
+    } catch (error) {
+      dispatch(updateFailure(error.message));
+      setUpdateErrorMessage(error.message);
+    }
   };
 
   // Upload an image for profile
@@ -52,6 +100,7 @@ const DashboardProfile = () => {
     //  }
     // }
     //}
+    setImageFileUploading(true);
     setImageFileUploadError(null);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + imageFile.name;
@@ -71,10 +120,13 @@ const DashboardProfile = () => {
         setImageFileUploadingProgress(null);
         setImageFile(null);
         setImageFileUrl(null);
+        setImageFileUploading(false);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImageFileUrl(downloadURL);
+          setFormData({ ...formData, profilePicture: downloadURL });
+          setImageFileUploading(false);
         });
       }
     );
@@ -90,7 +142,10 @@ const DashboardProfile = () => {
     <div className="w-full p-3 flex flex-col justify-center items-center gap-4">
       <h1 className="text-3xl font-semibold">Profile</h1>
 
-      <form className="w-full md:w-96 flex flex-col gap-3 justify-center items-center">
+      <form
+        className="w-full md:w-96 flex flex-col gap-3 justify-center items-center"
+        onSubmit={handleUserUpdateSubmit}
+      >
         <input
           className="hidden"
           type="file"
@@ -135,7 +190,7 @@ const DashboardProfile = () => {
         <div className="w-full flex flex-col gap-3">
           <Input
             placeholder={currentUser.username}
-            value={value}
+            defaultValue={currentUser.username}
             id="username"
             type="text"
             onChange={handleInputChange}
@@ -144,7 +199,7 @@ const DashboardProfile = () => {
 
           <Input
             placeholder={currentUser.email}
-            value={value}
+            defaultValue={currentUser.email}
             id="email"
             type="email"
             onChange={handleInputChange}
@@ -153,7 +208,7 @@ const DashboardProfile = () => {
 
           <Input
             placeholder="Password"
-            value={value}
+            defaultValue={currentUser.password}
             id="password"
             type="password"
             onChange={handleInputChange}
@@ -167,6 +222,12 @@ const DashboardProfile = () => {
           >
             <span>Update</span>
           </Button>
+          {updateUserSuccess && (
+            <Alert status="success">{updateUserSuccess}</Alert>
+          )}
+          {updateErrorMessage && (
+            <Alert status="failure">{updateErrorMessage}</Alert>
+          )}
         </div>
         <div className="flex justify-between w-full px-4 py-2 text-red-600">
           <button>Delete Account</button>

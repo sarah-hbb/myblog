@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/user.routes.js");
 const authRoutes = require("./routes/auth.routes.js");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.listen(3000, () => {
 });
 // to use json format for input of the backend
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);

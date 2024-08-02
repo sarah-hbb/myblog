@@ -27,7 +27,7 @@ const ProfileInHeader = ({ currentUser }) => {
 
   return (
     <div
-      className="relative flex-col"
+      className="relative flex-col z-10 cursor-pointer"
       onClick={toggleDropDown}
       ref={dropDownRef}
     >

@@ -9,6 +9,22 @@ module.exports = {
       width: {
         "burger-diag": "2.12132034356rem",
       },
+      animation: {
+        reveal: "reveal 1s ease-in-out",
+      },
+      keyframes: {
+        reveal: {
+          "0%": {
+            transform: "scaleY(0.005) scaleX(0)",
+          },
+          "50%": {
+            transform: "scaleY(0.005) scaleX(1)",
+          },
+          "100%": {
+            transform: "scaleY(1) scaleX(1)",
+          },
+        },
+      },
     },
   },
   plugins: [],

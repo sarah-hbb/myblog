@@ -46,7 +46,7 @@ const DashboardProfile = () => {
     setUpdateErrorMessage(null);
     setUpdateUserSuccess(null);
     if (Object.keys(formData).length === 0) {
-      setUpdateErrorMessage("No changes made tp your profile!");
+      setUpdateErrorMessage("No changes made to your profile!");
       return;
     }
     if (imageFileUoloading) {
@@ -222,7 +222,7 @@ const DashboardProfile = () => {
           >
             <span>Update</span>
           </Button>
-          {updateUserSuccess && (
+          {updateUserSuccess && !imageFileUploadError && (
             <Alert status="success">{updateUserSuccess}</Alert>
           )}
           {updateErrorMessage && (

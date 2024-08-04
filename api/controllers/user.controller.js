@@ -2,6 +2,7 @@ const errorHandler = require("../utils/error");
 const bcryptjs = require("bcryptjs");
 const User = require("../models/user.model.js");
 
+// Update user
 const updateUser = async (req, res, next) => {
   if (req.user.id !== req.params.userId) {
     return next(errorHandler(403, "You are not allowed to update this user"));
@@ -50,6 +51,7 @@ const updateUser = async (req, res, next) => {
   }
 };
 
+// Delete account
 const deleteUser = async (req, res, next) => {
   if (req.user.id !== req.params.userId) {
     return next(
@@ -64,4 +66,16 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-module.exports = { updateUser, deleteUser };
+// Signout
+const signout = async (req, res, next) => {
+  try {
+    res
+      .clearCookie("access_token")
+      .status(200)
+      .json("User has been signed out");
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { updateUser, deleteUser, signout };

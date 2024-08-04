@@ -19,6 +19,7 @@ app.listen(3000, () => {
 });
 // to use json format for input of the backend
 app.use(express.json());
+
 app.use(cookieParser());
 
 app.use("/api/user", userRoutes);

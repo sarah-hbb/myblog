@@ -3,10 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { PiSignOutFill } from "react-icons/pi";
 import DashboardSidebarTab from "./DashboardSidebarTab";
+import useSignout from "../../hooks/useSignout";
 
 const DashboardSidebar = ({ className }) => {
   const location = useLocation();
   const [tab, setTab] = useState();
+  const handleSignout = useSignout();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -25,15 +27,16 @@ const DashboardSidebar = ({ className }) => {
       <Link to="/dashboard?tab=profile">
         <DashboardSidebarTab
           icon={<IoPersonCircleSharp />}
-          title="Profile"
           active={tab === "profile"}
-        />
+        >
+          Profile
+        </DashboardSidebarTab>
       </Link>
-      <DashboardSidebarTab
-        icon={<PiSignOutFill />}
-        title="Sign out"
-        active={false}
-      />
+      <div onClick={handleSignout}>
+        <DashboardSidebarTab icon={<PiSignOutFill />} active={false}>
+          Sign out
+        </DashboardSidebarTab>
+      </div>
     </div>
   );
 };

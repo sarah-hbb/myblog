@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import AvatarIcon from "../../ui/AvatarIcon";
 import TextLink from "../../ui/TextLink";
+import useSignout from "../../../hooks/useSignout";
 
 const ProfileInHeader = ({ currentUser }) => {
   const [profileDropDownOpen, setProfileOpenDropDown] = useState(false);
@@ -24,6 +25,8 @@ const ProfileInHeader = ({ currentUser }) => {
       document.removeEventListener("click", handler);
     };
   }, [dropDownRef]);
+
+  const handleSignout = useSignout();
 
   return (
     <div
@@ -60,7 +63,7 @@ const ProfileInHeader = ({ currentUser }) => {
           >
             Profile
           </TextLink>
-          <TextLink path="/about">Sign out</TextLink>
+          <div onClick={handleSignout}>Sign out</div>
         </div>
       </div>
     </div>

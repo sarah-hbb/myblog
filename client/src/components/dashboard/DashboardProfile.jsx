@@ -17,11 +17,17 @@ import {
   updateStart,
   updateSuccess,
   updateFailure,
+  deleteAccountStart,
+  deleteAccountSuccess,
+  deleteAccountFailure,
 } from "../../redux/user/userSlice";
+import { CiWarning } from "react-icons/ci";
 import { useDispatch } from "react-redux";
+import Modal from "../ui/Modal";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 const DashboardProfile = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, error } = useSelector((state) => state.user);
 
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
@@ -32,6 +38,8 @@ const DashboardProfile = () => {
   const [formData, setFormData] = useState({});
   const [updateErrorMessage, setUpdateErrorMessage] = useState(null);
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false);
 
   const filePickerRef = useRef();
 
@@ -138,6 +146,28 @@ const DashboardProfile = () => {
     }
   }, [imageFile]);
 
+  const handleDeleteAccount = async () => {
+    setModalIsOpen(false);
+    try {
+      dispatch(deleteAccountStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        dispatch(deleteAccountFailure(data.message));
+      } else {
+        setDeleteAccountModalOpen(true);
+        setTimeout(() => {
+          dispatch(deleteAccountSuccess());
+        }, 3000);
+      }
+    } catch (error) {
+      dispatch(deleteAccountFailure(error.message));
+    }
+  };
+
   return (
     <div className="w-full p-3 flex flex-col justify-center items-center gap-4">
       <h1 className="text-3xl font-semibold">Profile</h1>
@@ -228,12 +258,49 @@ const DashboardProfile = () => {
           {updateErrorMessage && (
             <Alert status="failure">{updateErrorMessage}</Alert>
           )}
+          {error && <Alert status="failure">{error}</Alert>}
         </div>
         <div className="flex justify-between w-full px-4 py-2 text-red-600">
-          <button>Delete Account</button>
-          <button>Sign out</button>
+          <button onClick={() => setModalIsOpen(true)} type="button">
+            Delete Account
+          </button>
+          <button type="button">Sign out</button>
         </div>
       </form>
+      {modalIsOpen && (
+        <Modal
+          onClose={() => {
+            setModalIsOpen(false);
+          }}
+        >
+          <CiWarning className="text-5xl" />
+          <h2>Are you sure you want to delete your account?</h2>
+          <div className="flex flex-row gap-5">
+            <Button
+              deleteBtn={true}
+              onClick={handleDeleteAccount}
+              type="button"
+            >
+              Yes, delete my account
+            </Button>
+            <Button
+              inverseColor={true}
+              onClick={() => {
+                setModalIsOpen(false);
+              }}
+              type="button"
+            >
+              No, cancel
+            </Button>
+          </div>
+        </Modal>
+      )}
+      {deleteAccountModalOpen && (
+        <Modal onClose={() => setDeleteAccountModalOpen(false)}>
+          <LoadingSpinner />
+          <span>Your account is being deleted...</span>
+        </Modal>
+      )}
     </div>
   );
 };

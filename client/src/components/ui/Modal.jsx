@@ -1,4 +1,3 @@
-import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { IoClose } from "react-icons/io5";
 

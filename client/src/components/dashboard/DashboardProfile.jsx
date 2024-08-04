@@ -25,6 +25,7 @@ import { CiWarning } from "react-icons/ci";
 import { useDispatch } from "react-redux";
 import Modal from "../ui/Modal";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import useSignout from "../../hooks/useSignout";
 
 const DashboardProfile = () => {
   const { currentUser, error } = useSelector((state) => state.user);
@@ -168,6 +169,8 @@ const DashboardProfile = () => {
     }
   };
 
+  const handleSignout = useSignout();
+
   return (
     <div className="w-full p-3 flex flex-col justify-center items-center gap-4">
       <h1 className="text-3xl font-semibold">Profile</h1>
@@ -264,7 +267,9 @@ const DashboardProfile = () => {
           <button onClick={() => setModalIsOpen(true)} type="button">
             Delete Account
           </button>
-          <button type="button">Sign out</button>
+          <button type="button" onClick={handleSignout}>
+            Sign out
+          </button>
         </div>
       </form>
       {modalIsOpen && (

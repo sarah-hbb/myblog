@@ -24,7 +24,7 @@ const Header = () => {
       </Link>
       <Searchbar />
       <NavLinks className="gap-4 lg:gap-10 sm:flex hidden items-center" />
-      <div className="flex sm:flex-row-reverse items-center transition-all gap-4">
+      <div className="flex sm:flex-row-reverse items-center transition-all gap-4 flex-shrink-0">
         {currentUser ? (
           <ProfileInHeader currentUser={currentUser} />
         ) : (

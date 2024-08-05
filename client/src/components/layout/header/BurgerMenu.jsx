@@ -27,8 +27,8 @@ const BurgerMenu = () => {
   }, [menuRef]);
 
   return (
-    <div className="flex-col" ref={menuRef}>
-      <div className="sm:hidden w-8" onClick={toggleMenu}>
+    <div className="flex-col sm:hidden" ref={menuRef}>
+      <div className="w-8" onClick={toggleMenu}>
         <div
           className={`flex flex-col gap-1.5 origin-left
         before:w-8 before:h-1 before:bg-cyan-100 before:rounded-sm before:origin-left before:translate-x-0 before:-translate-y-1/2 before:transition-all

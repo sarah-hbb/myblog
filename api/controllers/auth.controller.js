@@ -57,7 +57,10 @@ const signin = async (req, res, next) => {
     }
 
     // create jwt token and send it to cookie
-    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET_KEY);
+    const token = jwt.sign(
+      { id: validUser._id, isAdmin: validUser.isAdmin },
+      process.env.JWT_SECRET_KEY
+    );
     const { password: pass, ...rest } = validUser._doc;
     res
       .status(200)
@@ -77,7 +80,10 @@ const google = async (req, res, next) => {
     const user = await User.findOne({ email });
     if (user) {
       // if the user exists signin user
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
+      const token = jwt.sign(
+        { id: user._id, isAdmin: user.isAdmin },
+        process.env.JWT_SECRET_KEY
+      );
       const { password: pass, ...rest } = user._doc;
       res
         .status(200)
@@ -100,7 +106,10 @@ const google = async (req, res, next) => {
         profilePicture: googlePhotoURL,
       });
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY);
+      const token = jwt.sign(
+        { id: newUser._id, isAdmin: newUser.isAdmin },
+        process.env.JWT_SECRET_KEY
+      );
       const { password, ...rest } = newUser._doc;
       res
         .status(200)

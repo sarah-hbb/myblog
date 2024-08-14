@@ -4,11 +4,13 @@ import { IoPersonCircleSharp } from "react-icons/io5";
 import { PiSignOutFill } from "react-icons/pi";
 import DashboardSidebarTab from "./DashboardSidebarTab";
 import useSignout from "../../hooks/useSignout";
+import { useSelector } from "react-redux";
 
-const DashboardSidebar = ({ className }) => {
+const DashboardSidebar = () => {
   const location = useLocation();
   const [tab, setTab] = useState();
   const handleSignout = useSignout();
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -20,7 +22,7 @@ const DashboardSidebar = ({ className }) => {
 
   return (
     <div
-      className="flex flex-col gap-4 p-2 
+      className="flex flex-col gap-2 p-2 
         min-h-full border-b-2 w-full
         sm:w-60 sm:border-r-2 sm:border-b-0"
     >
@@ -28,6 +30,7 @@ const DashboardSidebar = ({ className }) => {
         <DashboardSidebarTab
           icon={<IoPersonCircleSharp />}
           active={tab === "profile"}
+          notification={currentUser.isAdmin && "Admin"}
         >
           Profile
         </DashboardSidebarTab>
@@ -42,7 +45,3 @@ const DashboardSidebar = ({ className }) => {
 };
 
 export default DashboardSidebar;
-
-//   [&>div]:bg-yellow-100 [&>div]:text-lg [&>div]:flex [&>div]:items-center
-//    [&>div]:p-4 [&>div]:w-48
-//     [&>div]:rounded-lg

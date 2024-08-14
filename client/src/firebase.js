@@ -7,7 +7,6 @@ import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  apiKey: "AIzaSyDgUUCzhRM4npLZ6sufWk13n1O_2sUQjKk",
   authDomain: "mern-blog-street.firebaseapp.com",
   projectId: "mern-blog-street",
   storageBucket: "mern-blog-street.appspot.com",

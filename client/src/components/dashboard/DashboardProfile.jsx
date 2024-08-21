@@ -26,9 +26,10 @@ import { useDispatch } from "react-redux";
 import Modal from "../ui/Modal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import useSignout from "../../hooks/useSignout";
+import { Link, useNavigate } from "react-router-dom";
 
 const DashboardProfile = () => {
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
 
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
@@ -45,6 +46,8 @@ const DashboardProfile = () => {
   const filePickerRef = useRef();
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -250,11 +253,24 @@ const DashboardProfile = () => {
           <Button
             type="submit"
             className="w-full"
-            onClick={() => {}}
+            onClick={handleUserUpdateSubmit}
             inverseColor={false}
+            disabled={loading || imageFileUoloading}
           >
-            <span>Update</span>
+            <span>{loading ? "Loading..." : "Update"}</span>
           </Button>
+          {currentUser.isAdmin && (
+            <Button
+              type="button"
+              inverseColor={true}
+              onClick={() => {
+                navigate("/create-post");
+              }}
+            >
+              <span>Create a post</span>
+            </Button>
+          )}
+
           {updateUserSuccess && !imageFileUploadError && (
             <Alert status="success">{updateUserSuccess}</Alert>
           )}

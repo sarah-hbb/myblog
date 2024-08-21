@@ -11,7 +11,7 @@ const Input = ({
   defaultValue,
 }) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       <label className=" text-cyan-600 font-bold mb-1">{label}</label>
       <input
         placeholder={placeholder}

@@ -26,7 +26,7 @@ import { useDispatch } from "react-redux";
 import Modal from "../ui/Modal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import useSignout from "../../hooks/useSignout";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const DashboardProfile = () => {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -100,8 +100,8 @@ const DashboardProfile = () => {
   };
 
   const uploadImage = async () => {
-    // upload the selected image to firebase storage
-    // add these lines to firebase 🔥🔥🔥 rules
+    // upload the selected image to firebase storage 🔥🔥🔥
+    // add these lines to firebase rules
     // service firebase.storage {
     //  match /b/{bucket}/o {
     //   match /{allPaths=**} {

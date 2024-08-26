@@ -1,8 +1,8 @@
 import React from "react";
 
-const Select = ({ label, options, value, onChange }) => {
+const Select = ({ label, options, value, onChange, className }) => {
   return (
-    <div className="bg-green-100 w-full">
+    <div className={`${className} bg-green-100 w-full`}>
       {label && <label>{label}</label>}
       <select
         value={value}

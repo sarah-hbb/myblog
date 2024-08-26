@@ -14,13 +14,16 @@ import { app } from "../firebase";
 import Alert from "../components/ui/Alert";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
-  const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
+  const [publishError, setPublishError] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleChangeImageFile = (e) => {
     setFile(e.target.files[0]);
@@ -33,7 +36,7 @@ const CreatePost = () => {
         return;
       }
       setImageUploadError(null);
-      // upload file in firebase bucket
+      // upload file in firebase
       const storage = getStorage(app);
       const fileName = new Date().getTime() + "-" + file.name;
       const storageRef = ref(storage, fileName);
@@ -65,11 +68,37 @@ const CreatePost = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("/api/post/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+      if (res.ok) {
+        setPublishError(null);
+        navigate(`/post/${data.slug}`);
+      }
+    } catch (error) {
+      setPublishError("Something went wrong :(");
+    }
+  };
+
   const categoryOptions = [
     {
       value: "uncategorized",
       label: "Select a category",
       disabled: true,
+      selected: true,
     },
     { value: "javascript", label: "Javascript" },
     { value: "reactjs", label: "React.js" },
@@ -84,7 +113,7 @@ const CreatePost = () => {
     >
       <h1 className="font-semibold text-3xl">Create a post</h1>
 
-      <form onSubmit={() => {}} className="flex flex-col gap-4 w-full">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
         <div className="flex flex-col sm:flex-row gap-2 justify-between items-center">
           <Input
             type="text"
@@ -95,6 +124,7 @@ const CreatePost = () => {
             }}
           />
           <Select
+            className="sm:w-1/3"
             options={categoryOptions}
             onChange={(e) => {
               setFormData({ ...formData, category: e.target.value });
@@ -147,10 +177,10 @@ const CreatePost = () => {
 
         <ReactQuill
           theme="snow"
-          value={post}
-          onChange={setPost}
+          onChange={(value) => setFormData({ ...formData, content: value })}
           placeholder="Write your post..."
         />
+        {publishError && <Alert status="failure">{publishError}</Alert>}
         <Button type="submit" className="w-1/5 self-end">
           Publish
         </Button>

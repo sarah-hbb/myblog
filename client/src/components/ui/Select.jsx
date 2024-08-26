@@ -16,6 +16,7 @@ const Select = ({ label, options, value, onChange, className }) => {
             value={option.value}
             className="font-semibold"
             disabled={option.disabled}
+            selected={option.selected}
           >
             {option.label}
           </option>

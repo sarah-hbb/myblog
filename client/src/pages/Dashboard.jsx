@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import DashboardSidebar from "../components/dashboard/DashboardSidebar";
 import DashboardProfile from "../components/dashboard/DashboardProfile";
 import { useSelector } from "react-redux";
+import DashboardPosts from "../components/dashboard/DashboardPosts";
 
 // the url for dashboard page is like: /dashboard?tab=profile
 // location.search = ?tab=profile
@@ -22,13 +23,16 @@ const Dashboard = () => {
   }, [location.search]);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4">
+    <div className=" flex-1 flex flex-col sm:flex-row gap-4 ">
       {/* Sidebar */}
       <div>
         <DashboardSidebar isAdmin={currentUser.isAdmin} />
       </div>
-      {/* Profile */}
-      {tab === "profile" && <DashboardProfile />}
+      {/* Dashboard */}
+      <div className="p-2 w-full">
+        {tab === "profile" && <DashboardProfile />}
+        {tab === "posts" && <DashboardPosts />}
+      </div>
     </div>
   );
 };

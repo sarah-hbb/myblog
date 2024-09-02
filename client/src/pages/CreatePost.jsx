@@ -104,6 +104,7 @@ const CreatePost = () => {
     { value: "reactjs", label: "React.js" },
     { value: "nextjs", label: "Next.js" },
     { value: "typescript", label: "Typescript" },
+    { value: "github", label: "Git-hub" },
     { value: "travel", label: "Travel" },
   ];
   return (

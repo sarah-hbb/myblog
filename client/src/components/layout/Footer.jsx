@@ -9,7 +9,7 @@ import { RiTwitterXFill } from "react-icons/ri";
 
 const Footer = () => {
   return (
-    <div className="w-screen">
+    <div className="w-full">
       <div className="px-5 sm:px-20 py-5 sm:py-10 mb-2 flex flex-wrap justify-between sm:justify-start gap-y-5 sm:gap-x-20 gap-x-5 border-t-2 border-b-2  border-cyan-500 ">
         <div className=" text-cyan-600">
           <h1 className=" font-bold ">About</h1>

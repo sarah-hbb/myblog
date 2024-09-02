@@ -257,7 +257,7 @@ const DashboardProfile = () => {
             inverseColor={false}
             disabled={loading || imageFileUoloading}
           >
-            <span>{loading ? "Loading..." : "Update"}</span>
+            <span>{loading ? "Loading..." : "Update Profile"}</span>
           </Button>
           {currentUser.isAdmin && (
             <Button

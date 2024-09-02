@@ -2,16 +2,20 @@ import { Link } from "react-router-dom";
 
 const PostsList = ({ posts }) => {
   return (
-    <div className="flex flex-col gap-1">
+    <div
+      className="flex flex-col items-center gap-1 p-2 lg:max-w-7xl
+      lg:mx-auto lg:p-10 lg:shadow-2xl
+      [&>*:not(:last-child)]:border-b [&>*]:border-gray-300 last:border-b-0"
+    >
       {posts.map((post, index) => (
         <div
           key={index}
-          className="flex justify-between gap-3 p-2 w-full border-b border-gray-400 
+          className="flex justify-between gap-3 p-2 min-w-full
           hover:scale-105 transition-all"
         >
           <Link to={`/post/${post.slug}`} className="flex-1 flex gap-3 p-1">
-            <img src={post.image} className="h-20 w-20 " />
-            <div className="flex-1 flex flex-col lg:flex-row justify-between lg:gap-4 gap-1">
+            <img src={post.image} alt="" className="h-20 w-20 object-cover" />
+            <div className="flex-1 flex flex-col lg:flex-row justify-between lg:gap-9">
               <h1 className="flex-1 text-lg uppercase font-semibold">
                 {post.title}
               </h1>
@@ -21,7 +25,7 @@ const PostsList = ({ posts }) => {
               </span>
             </div>
           </Link>
-          <div className="flex md:flex-row flex-col gap-4 ">
+          <div className="flex flex-row gap-4">
             <Link to={`/update-post/${post._id}`}>
               <h3 className="text-cyan-700 hover:font-semibold">Edit</h3>
             </Link>

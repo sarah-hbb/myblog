@@ -2,7 +2,7 @@ import React from "react";
 
 const Select = ({ label, options, value, onChange, className }) => {
   return (
-    <div className={`${className} bg-green-100 w-full`}>
+    <div className={`${className} bg-green-100 w-full rounded-md`}>
       {label && <label>{label}</label>}
       <select
         value={value}
@@ -16,7 +16,6 @@ const Select = ({ label, options, value, onChange, className }) => {
             value={option.value}
             className="font-semibold"
             disabled={option.disabled}
-            selected={option.selected}
           >
             {option.label}
           </option>

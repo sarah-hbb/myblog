@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Input from "../components/ui/Input";
@@ -14,9 +14,10 @@ import { app } from "../firebase";
 import Alert from "../components/ui/Alert";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const CreatePost = () => {
+const UpdatePost = () => {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
@@ -24,6 +25,26 @@ const CreatePost = () => {
   const [publishError, setPublishError] = useState(null);
 
   const navigate = useNavigate();
+  const { postId } = useParams();
+  const { currentUser } = useSelector((state) => state.user);
+
+  const fetchPostById = async () => {
+    try {
+      const res = await fetch(`/api/post/getposts?postId=${postId}`);
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+      } else {
+        setImageUploadError(null);
+        setFormData(data.posts[0]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchPostById();
+  }, [postId]);
 
   const handleChangeImageFile = (e) => {
     setFile(e.target.files[0]);
@@ -72,13 +93,16 @@ const CreatePost = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("/api/post/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `/api/post/updatepost/${formData._id}/${currentUser._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         setPublishError(data.message);
@@ -90,6 +114,7 @@ const CreatePost = () => {
       }
     } catch (error) {
       setPublishError("Something went wrong :(");
+      console.log(error);
     }
   };
 
@@ -112,14 +137,15 @@ const CreatePost = () => {
       className="flex flex-col justify-center items-center
      gap-3 p-4 w-full sm:w-3/4 sm:max-w-5xl sm:mx-auto"
     >
-      <h1 className="font-semibold text-3xl">Create a post</h1>
+      <h1 className="font-semibold text-3xl">Update Post</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
         <div className="flex flex-col sm:flex-row gap-2 justify-between items-center">
           <Input
             type="text"
-            placeholder="Title"
+            value={formData.title}
             id="title"
+            defaultValue={""}
             onChange={(e) => {
               setFormData({ ...formData, title: e.target.value });
             }}
@@ -180,14 +206,15 @@ const CreatePost = () => {
           theme="snow"
           onChange={(value) => setFormData({ ...formData, content: value })}
           placeholder="Write your post..."
+          value={formData.content}
         />
         {publishError && <Alert status="failure">{publishError}</Alert>}
         <Button type="submit" className="w-1/5 self-end">
-          Publish
+          Update
         </Button>
       </form>
     </div>
   );
 };
 
-export default CreatePost;
+export default UpdatePost;

@@ -3,6 +3,7 @@ const {
   create,
   getPosts,
   deletepost,
+  updatepost,
 } = require("../controllers/post.controller.js");
 const verifyToken = require("../utils/verifyUser.js");
 
@@ -11,5 +12,6 @@ const router = express.Router();
 router.post("/create", verifyToken, create);
 router.get("/getposts", getPosts);
 router.delete("/deletepost/:postId/:userId", verifyToken, deletepost);
+router.put("/updatepost/:postId/:userId", verifyToken, updatepost);
 
 module.exports = router;

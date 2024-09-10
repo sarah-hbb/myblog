@@ -1,26 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { SiReaddotcv } from "react-icons/si";
 import { PiSignOutFill } from "react-icons/pi";
+import { PiUsersThreeLight } from "react-icons/pi";
 import DashboardSidebarTab from "./DashboardSidebarTab";
 import useSignout from "../../hooks/useSignout";
 import { useSelector } from "react-redux";
 
-const DashboardSidebar = () => {
-  const location = useLocation();
-  const [tab, setTab] = useState();
+const DashboardSidebar = ({ tab }) => {
   const handleSignout = useSignout();
   const { currentUser } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const tabFromUrl = urlParams.get("tab");
-    if (tabFromUrl) {
-      setTab(tabFromUrl);
-    }
-  }, [location.search]);
-
   return (
     <div
       className="flex flex-col gap-2 p-2 
@@ -42,6 +31,17 @@ const DashboardSidebar = () => {
         <Link to="/dashboard?tab=posts">
           <DashboardSidebarTab icon={<SiReaddotcv />} active={tab === "posts"}>
             Posts
+          </DashboardSidebarTab>
+        </Link>
+      )}
+      {/* Users tab */}
+      {currentUser.isAdmin && (
+        <Link to="/dashboard?tab=users">
+          <DashboardSidebarTab
+            icon={<PiUsersThreeLight />}
+            active={tab === "users"}
+          >
+            Users
           </DashboardSidebarTab>
         </Link>
       )}

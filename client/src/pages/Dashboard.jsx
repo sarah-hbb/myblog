@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import DashboardSidebar from "../components/dashboard/DashboardSidebar";
-import DashboardProfile from "../components/dashboard/DashboardProfile";
+import DashboardContent from "../components/dashboard/DashboardContent";
 import { useSelector } from "react-redux";
-import DashboardPosts from "../components/dashboard/DashboardPosts";
-
+import { useLocation } from "react-router-dom";
 // the url for dashboard page is like: /dashboard?tab=profile
 // location.search = ?tab=profile
 // tabFromUrl = profile
@@ -23,15 +21,14 @@ const Dashboard = () => {
   }, [location.search]);
 
   return (
-    <div className=" flex-1 flex flex-col sm:flex-row gap-4 ">
+    <div className=" flex-1 flex flex-col sm:flex-row gap-1 ">
       {/* Sidebar */}
       <div>
-        <DashboardSidebar isAdmin={currentUser.isAdmin} />
+        <DashboardSidebar isAdmin={currentUser.isAdmin} tab={tab} />
       </div>
       {/* Dashboard */}
       <div className="p-2 w-full">
-        {tab === "profile" && <DashboardProfile />}
-        {tab === "posts" && <DashboardPosts />}
+        <DashboardContent tab={tab} />
       </div>
     </div>
   );

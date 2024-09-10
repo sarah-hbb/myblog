@@ -23,7 +23,9 @@ const DashboardPosts = () => {
           setShowMore(false);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -65,14 +67,16 @@ const DashboardPosts = () => {
           prv.filter((post) => post._id !== postIdToDelete)
         );
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center w-full">
       <div
-        className="flex flex-col items-center gap-1 p-2 lg:max-w-7xl
-      lg:mx-auto lg:p-10 lg:shadow-2xl
+        className="flex flex-col items-center gap-1 p-2 
+        lg:max-w-7xl lg:mx-auto lg:p-10 lg:shadow-2xl
       [&>*:not(:last-child)]:border-b [&>*]:border-gray-300 last:border-b-0"
       >
         {userPosts.map((post, index) => (

@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Projects from "./pages/Projects";
+import Post from "./pages/Post";
 
 import Layout from "./components/layout/Layout";
 import PrivateRoute from "./components/PrivateRoute";
@@ -28,6 +29,7 @@ function App() {
             <Route path="/create-post" element={<CreatePost />} />
             <Route path="/update-post/:postId" element={<UpdatePost />} />
           </Route>
+          <Route path="/post/:postSlug" element={<Post />} />
           <Route path="/projects" element={<Projects />} />
         </Routes>
       </Layout>

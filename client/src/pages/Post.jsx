@@ -68,6 +68,7 @@ const Post = () => {
             {new Date(post.updatedAt).toLocaleDateString()}
           </h3>
           <div
+            // post-content class added to style innerHTML of post content. you can style it in index.css file
             dangerouslySetInnerHTML={{ __html: post.content }}
             className="max-w-5xl w-full mx-auto post-content"
           ></div>

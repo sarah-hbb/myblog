@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import Alert from "../components/ui/Alert";
+import CreateComment from "../components/comment/CreateComment";
 
 const Post = () => {
   const { postSlug } = useParams();
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const { currentUser } = useSelector((state) => state.user);
 
   const fetchPostBySlug = async () => {
     try {
@@ -72,6 +76,24 @@ const Post = () => {
             dangerouslySetInnerHTML={{ __html: post.content }}
             className="max-w-5xl w-full mx-auto post-content"
           ></div>
+          {currentUser ? (
+            <CreateComment
+              postId={post._id}
+              userId={currentUser._id}
+              profilePicture={currentUser.profilePicture}
+              username={currentUser.username}
+            />
+          ) : (
+            <div>
+              <Link
+                to="/signin"
+                className="text-cyan-600 hover:underline font-semibold"
+              >
+                Sign-in
+              </Link>
+              <span> to add your comment on this post.</span>
+            </div>
+          )}
         </main>
       )}
     </div>

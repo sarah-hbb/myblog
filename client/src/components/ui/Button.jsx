@@ -2,7 +2,6 @@ import React from "react";
 
 const Button = ({
   type,
-  size,
   inverseColor,
   deleteBtn,
   onClick,

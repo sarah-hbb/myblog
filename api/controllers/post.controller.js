@@ -29,7 +29,7 @@ const create = async (req, res, next) => {
   }
 };
 
-// Get post (all posts or specific post)
+// Get post (all posts or just one specific post)
 const getPosts = async (req, res, next) => {
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;

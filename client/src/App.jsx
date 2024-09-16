@@ -8,6 +8,7 @@ import Projects from "./pages/Projects";
 import Post from "./pages/Post";
 
 import Layout from "./components/layout/Layout";
+import ScrollToTop from "./components/ui/ScrollToTop";
 import PrivateRoute from "./components/PrivateRoute";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoutes";
 import CreatePost from "./pages/CreatePost";
@@ -16,6 +17,7 @@ import UpdatePost from "./pages/UpdatePost";
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />

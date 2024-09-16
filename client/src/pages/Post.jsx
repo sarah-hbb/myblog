@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import Alert from "../components/ui/Alert";
-import CreateComment from "../components/comment/CreateComment";
+import Comments from "../components/comment/Comments";
 
 const Post = () => {
   const { postSlug } = useParams();
@@ -40,7 +40,7 @@ const Post = () => {
   }, [postSlug]);
 
   return (
-    <div className="flex flex-col justify-center items-center pt-4 ">
+    <div className="flex flex-col justify-center items-center pt-4">
       {loading ? (
         <LoadingSpinner />
       ) : error ? (
@@ -50,6 +50,7 @@ const Post = () => {
       ) : (
         <main
           className="px-4 py-8 w-full md:max-w-7xl md:mx-auto
+          border-b border-gray-300
             flex flex-col justify-center items-center pt-4 gap-4 font-serif"
         >
           <h1 className="text-3xl p-6 text-center font-bold italic text-slate-600">
@@ -76,26 +77,18 @@ const Post = () => {
             dangerouslySetInnerHTML={{ __html: post.content }}
             className="max-w-5xl w-full mx-auto post-content"
           ></div>
-          {currentUser ? (
-            <CreateComment
-              postId={post._id}
-              userId={currentUser._id}
-              profilePicture={currentUser.profilePicture}
-              username={currentUser.username}
-            />
-          ) : (
-            <div>
-              <Link
-                to="/signin"
-                className="text-cyan-600 hover:underline font-semibold"
-              >
-                Sign-in
-              </Link>
-              <span> to add your comment on this post.</span>
-            </div>
-          )}
         </main>
       )}
+
+      {/* Comments setion */}
+      <div className="flex flex-col w-full max-w-3xl mx-auto p-2 mt-2 gap-4">
+        <Comments
+          postId={post._id}
+          userId={currentUser._id}
+          profilePicture={currentUser.profilePicture}
+          username={currentUser.username}
+        />
+      </div>
     </div>
   );
 };

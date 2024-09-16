@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import AvatarIcon from "../ui/AvatarIcon";
 import Button from "../ui/Button";
@@ -6,10 +6,17 @@ import { GrSend } from "react-icons/gr";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import Alert from "../ui/Alert";
 
-const CreateComment = ({ postId, userId, profilePicture, username }) => {
+const CreateComment = ({
+  postId,
+  userId,
+  profilePicture,
+  username,
+  onPostComments,
+}) => {
   const [commentContent, setCommentContent] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -29,6 +36,7 @@ const CreateComment = ({ postId, userId, profilePicture, username }) => {
       const data = await res.json();
       if (res.ok) {
         setCommentContent("");
+        onPostComments(data);
       } else {
         setError(data.message);
       }
@@ -40,9 +48,9 @@ const CreateComment = ({ postId, userId, profilePicture, username }) => {
   };
 
   return (
-    <div className="w-full border-t border-gray-300 font-sans">
+    <div className="w-full font-sans">
       <div
-        className="flex flex-col  w-full max-w-3xl mx-auto p-2 mt-2 gap-2
+        className="flex flex-col w-full max-w-3xl mx-auto p-2 mt-2 gap-2
         rounded-md border border-cyan-500 shadow-lg shadow-cyan-800"
       >
         <div className="flex gap-1 items-stretch">

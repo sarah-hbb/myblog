@@ -13,8 +13,10 @@ import moment from "moment";
 
 const Comments = ({ profilePicture, username, postId }) => {
   const [comments, setComments] = useState([]);
+  const [totalComments, setTotalComments] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [commentIdToDelete, setCommentIdToDelete] = useState(null);
+  const [showMore, setShowMore] = useState(false);
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -23,7 +25,11 @@ const Comments = ({ profilePicture, username, postId }) => {
       const res = await fetch(`/api/comment/getPostComments/${postId}`);
       const data = await res.json();
       if (res.ok) {
-        setComments(data);
+        setComments(data.comments);
+        setTotalComments(data.totalComments);
+      }
+      if (data.comments.length > 4) {
+        setShowMore(true);
       }
     } catch (error) {
       console.log(error);
@@ -54,6 +60,24 @@ const Comments = ({ profilePicture, username, postId }) => {
     }
   };
 
+  const handleShowMore = async () => {
+    const startIndex = comments.length;
+    try {
+      const res = await fetch(
+        `/api/comment/getPostComments/${postId}?startIndex=${startIndex}`
+      );
+      const data = await res.json();
+      if (res.ok) {
+        setComments((prvComments) => [...prvComments, ...data.comments]);
+        if (data.comments.length < 5) {
+          setShowMore(false);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       {currentUser ? (
@@ -63,7 +87,7 @@ const Comments = ({ profilePicture, username, postId }) => {
           profilePicture={currentUser.profilePicture}
           username={currentUser.username}
           onPostComments={(newComment) => {
-            setComments([newComment, ...comments]);
+            setComments((prvComments) => [newComment, ...prvComments]);
           }}
         />
       ) : (
@@ -84,12 +108,12 @@ const Comments = ({ profilePicture, username, postId }) => {
       >
         <h1 className="text-lg font-semibold self-start border-none py-4">
           {" "}
-          {comments.length === 0 ? (
+          {totalComments === 0 ? (
             <span> No comments on this post yet</span>
-          ) : comments.length === 1 ? (
+          ) : totalComments === 1 ? (
             <span>1 comment on this post</span>
           ) : (
-            <span>{comments.length} comments on this post</span>
+            <span>{totalComments} comments on this post</span>
           )}
         </h1>
         {comments.map((comment, index) => (
@@ -132,6 +156,17 @@ const Comments = ({ profilePicture, username, postId }) => {
             </div>
           </div>
         ))}
+
+        {showMore && (
+          <button
+            type="button"
+            className="font-bold text-lg text-cyan-600 p-4 self-center
+          hover:text-black hover:scale-105 transition-all"
+            onClick={handleShowMore}
+          >
+            Show more posts
+          </button>
+        )}
 
         {showDeleteModal && (
           <Modal

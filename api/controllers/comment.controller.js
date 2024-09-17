@@ -24,9 +24,16 @@ const getPostComments = async (req, res, next) => {
   try {
     const comments = await Comment.find({
       postId: req.params.postId,
-    }).sort({ createdAt: -1 });
+    })
+      .sort({ createdAt: -1 })
+      .skip(req.query.startIndex)
+      .limit(5);
 
-    res.status(200).json(comments);
+    const totalComments = await Comment.find({
+      postId: req.params.postId,
+    }).countDocuments();
+
+    res.status(200).json({ comments, totalComments });
   } catch (error) {
     next(error);
   }

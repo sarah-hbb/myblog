@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import Alert from "../components/ui/Alert";
-import Comments from "../components/comment/Comments";
+import CommentsList from "../components/comment/CommentsList";
 
 const Post = () => {
   const { postSlug } = useParams();
@@ -82,12 +82,7 @@ const Post = () => {
 
       {/* Comments setion */}
       <div className="flex flex-col w-full max-w-3xl mx-auto p-2 mt-2 gap-4">
-        <Comments
-          postId={post._id}
-          userId={currentUser._id}
-          profilePicture={currentUser.profilePicture}
-          username={currentUser.username}
-        />
+        <CommentsList postId={post._id} />
       </div>
     </div>
   );

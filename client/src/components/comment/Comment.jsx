@@ -3,12 +3,11 @@ import AvatarIcon from "../ui/AvatarIcon";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import { MdDeleteOutline } from "react-icons/md";
-import { BiLike } from "react-icons/bi";
 import { AiFillLike } from "react-icons/ai";
 import { CiWarning } from "react-icons/ci";
 import moment from "moment";
 
-const Comment = ({ comment, currentUser, onDelete }) => {
+const Comment = ({ comment, currentUser, onDelete, onLike }) => {
   const [user, setUser] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -49,22 +48,40 @@ const Comment = ({ comment, currentUser, onDelete }) => {
           <h1 className="text-slate-500">{comment.content}</h1>
           <div
             className="flex flex-row gap-4 p-1 border-t border-slate-300 text-sm
-            [&>*]:text-gray-400 [&>*:hover]:scale-110 [&>*]:transition-all"
+            [&>*]:text-gray-400 "
           >
-            {false ? (
-              <button type="button">
-                <BiLike />
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                className="hover:scale-125 transition-all"
+                onClick={() => onLike(comment._id)}
+              >
+                <AiFillLike
+                  className={`${
+                    currentUser && comment.likes.includes(currentUser._id)
+                      ? "text-cyan-700"
+                      : ""
+                  } text-lg hover:-rotate-12 hover:text-cyan-500 transition-all `}
+                />
               </button>
-            ) : (
-              <div className="flex items-center gap-1">
-                <AiFillLike className="text-cyan-600" />
-                <h3> 4 likes</h3>
-              </div>
-            )}
 
-            <button type="buton">Edit</button>
+              {comment.numberOfLikes > 0 && (
+                <h3>
+                  {`${comment.numberOfLikes} ${
+                    comment.numberOfLikes > 1 ? "likes" : "like"
+                  } `}
+                </h3>
+              )}
+            </div>
+
+            <button
+              type="buton"
+              className="hover:scale-110 hover:text-gray-700 transition-all"
+            >
+              Edit
+            </button>
             <button type="button" onClick={handleDelete}>
-              <MdDeleteOutline />
+              <MdDeleteOutline className="text-lg hover:text-red-600 hover:scale-110 transition-all" />
             </button>
           </div>
         </div>

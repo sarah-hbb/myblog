@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateComment from "./CreateComment";
 
 import Comment from "./Comment";
@@ -13,6 +13,7 @@ const CommentsList = ({ postId }) => {
   const [showMore, setShowMore] = useState(false);
 
   const { currentUser } = useSelector((state) => state.user);
+  const { navigate } = useNavigate();
 
   const fetchComments = async () => {
     try {
@@ -33,6 +34,34 @@ const CommentsList = ({ postId }) => {
   useEffect(() => {
     fetchComments();
   }, [postId]);
+
+  const handleLikeComment = async (commentId) => {
+    try {
+      if (!currentUser) {
+        navigate("/signin");
+        return;
+      }
+      const res = await fetch(`/api/comment/likecomment/${commentId}`, {
+        method: "PUT",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setComments(
+          comments.map((comment) =>
+            comment._id === commentId
+              ? {
+                  ...comment,
+                  likes: data.likes,
+                  numberOfLikes: data.likes.length,
+                }
+              : comment
+          )
+        );
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const handleDeleteComment = async (commentIdToDelete) => {
     // try {
@@ -112,12 +141,13 @@ const CommentsList = ({ postId }) => {
             <span>{totalComments} comments on this post</span>
           )}
         </h1>
-        {comments.map((comment, index) => (
+        {comments.map((comment) => (
           <Comment
             key={comment._id}
             comment={comment}
             currentUser={currentUser}
             onDelete={handleDeleteComment}
+            onLike={handleLikeComment}
           />
         ))}
 

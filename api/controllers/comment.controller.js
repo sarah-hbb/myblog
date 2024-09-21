@@ -39,4 +39,28 @@ const getPostComments = async (req, res, next) => {
   }
 };
 
-module.exports = { createComment, getPostComments };
+// handle like/unlike a comment
+const likeComment = async (req, res, next) => {
+  try {
+    const comment = await Comment.findById(req.params.commentId);
+    if (!comment) {
+      return next(errorHandler(404, "Comment not found"));
+    }
+    const currentUserIdIndex = comment.likes.indexOf(req.user.id);
+    // when current user has not liked the comment yet: like
+    if (currentUserIdIndex === -1) {
+      comment.numberOfLikes += 1;
+      comment.likes.push(req.user.id);
+    } else {
+      // when cuurent user already liked the comment: unlike
+      comment.numberOfLikes -= 1;
+      comment.likes.splice(currentUserIdIndex, 1);
+    }
+    await comment.save();
+    res.status(200).json(comment);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { createComment, getPostComments, likeComment };

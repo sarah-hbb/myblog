@@ -11,6 +11,9 @@ const Comment = ({ comment, currentUser, onDelete, onLike }) => {
   const [user, setUser] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  const canDeleteComment =
+    currentUser && (currentUser.isAdmin || comment.userId === currentUser._id);
+
   const getUser = async () => {
     try {
       const res = await fetch(`/api/user/${comment.userId}`);
@@ -28,8 +31,8 @@ const Comment = ({ comment, currentUser, onDelete, onLike }) => {
   }, [comment]);
 
   const handleDelete = () => {
-    setShowDeleteModal(true);
     onDelete(comment._id);
+    setShowDeleteModal(false);
   };
 
   return (
@@ -80,9 +83,12 @@ const Comment = ({ comment, currentUser, onDelete, onLike }) => {
             >
               Edit
             </button>
-            <button type="button" onClick={handleDelete}>
-              <MdDeleteOutline className="text-lg hover:text-red-600 hover:scale-110 transition-all" />
-            </button>
+            {/* delete btn */}
+            {canDeleteComment && (
+              <button type="button" onClick={() => setShowDeleteModal(true)}>
+                <MdDeleteOutline className="text-lg hover:text-red-600 hover:scale-110 transition-all" />
+              </button>
+            )}
           </div>
         </div>
       </div>

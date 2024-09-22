@@ -8,9 +8,6 @@ import Comment from "./Comment";
 const CommentsList = ({ postId }) => {
   const [comments, setComments] = useState([]);
   const [totalComments, setTotalComments] = useState();
-  const [commentIdToDelete, setCommentIdToDelete] = useState(null);
-
-  const [showMore, setShowMore] = useState(false);
 
   const { currentUser } = useSelector((state) => state.user);
   const { navigate } = useNavigate();
@@ -19,12 +16,10 @@ const CommentsList = ({ postId }) => {
     try {
       const res = await fetch(`/api/comment/getPostComments/${postId}`);
       const data = await res.json();
+
       if (res.ok) {
         setComments(data.comments);
         setTotalComments(data.totalComments);
-      }
-      if (data.comments.length > 4) {
-        setShowMore(true);
       }
     } catch (error) {
       console.log(error);
@@ -64,24 +59,25 @@ const CommentsList = ({ postId }) => {
   };
 
   const handleDeleteComment = async (commentIdToDelete) => {
-    // try {
-    //   const res = await fetch(`/api/comment/deletecomment/${commentIdToDelete}`, {
-    //     method: "DELETE",
-    //   });
-    //   const data = await res.json();
-    //   if (!res.ok) {
-    //     console.log(data.message);
-    //   } else {
-    //     setComments((prvComments) =>
-    //       prvComments.filter((comment) => comment._id !== commentIdToDelete)
-    //     );
-    //     //await fetchComments();
-    //     setShowDeleteModal(false);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    console.log(commentIdToDelete);
+    try {
+      const res = await fetch(
+        `/api/comment/deletecomment/${commentIdToDelete}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const data = await res.json();
+      if (res.ok) {
+        setComments(
+          comments.filter((comment) => comment._id !== commentIdToDelete)
+        );
+        setTotalComments((prv) => prv - 1);
+      } else {
+        console.log(data.message);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const handleShowMore = async () => {
@@ -93,9 +89,6 @@ const CommentsList = ({ postId }) => {
       const data = await res.json();
       if (res.ok) {
         setComments((prvComments) => [...prvComments, ...data.comments]);
-        if (data.comments.length < 5) {
-          setShowMore(false);
-        }
       }
     } catch (error) {
       console.log(error);
@@ -116,7 +109,10 @@ const CommentsList = ({ postId }) => {
           }}
         />
       ) : (
-        <div>
+        <div
+          className="p-2 mt-2 gap-2
+        rounded-md border border-cyan-500 shadow-lg shadow-cyan-800"
+        >
           <Link
             to="/signin"
             className="text-cyan-600 hover:underline font-semibold"
@@ -151,14 +147,14 @@ const CommentsList = ({ postId }) => {
           />
         ))}
 
-        {showMore && (
+        {totalComments > comments.length && (
           <button
             type="button"
             className="font-bold text-lg text-cyan-600 p-4 self-center
           hover:text-black hover:scale-105 transition-all"
             onClick={handleShowMore}
           >
-            Show more posts
+            Show more comments
           </button>
         )}
       </div>

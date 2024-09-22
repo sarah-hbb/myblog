@@ -62,7 +62,6 @@ const DashboardUsers = () => {
         setUsers((prvUsers) =>
           prvUsers.filter((user) => user._id !== userIdToDelete)
         );
-        await fetchUsers();
         setShowDeleteModal(false);
       }
     } catch (error) {

@@ -11,8 +11,6 @@ const Post = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { currentUser } = useSelector((state) => state.user);
-
   const fetchPostBySlug = async () => {
     try {
       setLoading(true);

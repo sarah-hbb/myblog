@@ -63,6 +63,7 @@ const likeComment = async (req, res, next) => {
   }
 };
 
+// delete a comment
 const deleteComment = async (req, res, next) => {
   try {
     const comment = await Comment.findById(req.params.commentId);
@@ -82,4 +83,36 @@ const deleteComment = async (req, res, next) => {
   }
 };
 
-module.exports = { createComment, getPostComments, likeComment, deleteComment };
+// edit a comment
+const editComment = async (req, res, next) => {
+  try {
+    const comment = await Comment.findById(req.params.commentId);
+    if (!comment) {
+      return next(errorHandler(404, "comment not found"));
+    }
+    if (req.user.id !== comment.userId) {
+      return next(
+        errorHandler(404, "You are not allowed to edit this comment.")
+      );
+    }
+    const updatedComment = await Comment.findByIdAndUpdate(
+      req.params.commentId,
+      {
+        content: req.body.content,
+      },
+
+      { new: true }
+    );
+    res.status(200).json(updatedComment);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  createComment,
+  getPostComments,
+  likeComment,
+  deleteComment,
+  editComment,
+};

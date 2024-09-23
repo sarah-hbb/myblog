@@ -80,6 +80,14 @@ const CommentsList = ({ postId }) => {
     }
   };
 
+  const handleEditComment = (comment, updatedContent) => {
+    setComments(
+      comments.map((c) =>
+        c._id === comment._id ? { ...c, content: updatedContent } : c
+      )
+    );
+  };
+
   const handleShowMore = async () => {
     const startIndex = comments.length;
     try {
@@ -144,6 +152,7 @@ const CommentsList = ({ postId }) => {
             currentUser={currentUser}
             onDelete={handleDeleteComment}
             onLike={handleLikeComment}
+            onEdit={handleEditComment}
           />
         ))}
 

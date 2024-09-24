@@ -10,7 +10,7 @@ module.exports = {
         "burger-diag": "2.12132034356rem",
       },
       animation: {
-        reveal: "reveal 1s ease-in-out",
+        reveal: "reveal 500ms ease-in-out",
       },
       keyframes: {
         reveal: {

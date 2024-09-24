@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import Alert from "../components/ui/Alert";
 import CommentsList from "../components/comment/CommentsList";
+import PostsList from "../components/post/PostsList";
+import SliderComponent from "../components/ui/SliderComponent";
 
 const Post = () => {
   const { postSlug } = useParams();
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [postCategory, setPostCategory] = useState();
+  const [postsByCategory, setPostsByCategory] = useState([]);
+  const [loadingPostsByCategory, setLoadingPostsByCategory] = useState(true);
+  const [errorPostsByCategory, setErrorPostsByCategory] = useState(null);
 
   const fetchPostBySlug = async () => {
     try {
@@ -23,6 +28,7 @@ const Post = () => {
           setError("Ooops! there is problem loading the post");
         } else {
           setPost(data.posts[0]);
+          setPostCategory(data.posts[0].category);
           setError(null);
         }
       }
@@ -33,9 +39,35 @@ const Post = () => {
     }
   };
 
+  const fetchPostsByCategory = async () => {
+    try {
+      setLoadingPostsByCategory(true);
+      const res = await fetch(`/api/post/getposts?category=${postCategory}`);
+      const data = await res.json();
+      if (!res.ok) {
+        setErrorPostsByCategory(data.message);
+      } else {
+        setPostsByCategory(data.posts);
+        setErrorPostsByCategory(null);
+      }
+    } catch (error) {
+      setErrorPostsByCategory(
+        "There is a problem loading more post from this category"
+      );
+    } finally {
+      setLoadingPostsByCategory(false);
+    }
+  };
+
   useEffect(() => {
     fetchPostBySlug();
   }, [postSlug]);
+
+  useEffect(() => {
+    if (postCategory) {
+      fetchPostsByCategory();
+    }
+  }, [postCategory]);
 
   return (
     <div className="flex flex-col justify-center items-center pt-4">
@@ -79,9 +111,24 @@ const Post = () => {
       )}
 
       {/* Comments setion */}
-      <div className="flex flex-col w-full max-w-3xl mx-auto p-2 mt-2 gap-4">
+      <div className="flex flex-col w-full max-w-3xl mx-auto self-start p-2 mt-2 gap-4">
         <CommentsList postId={post._id} />
       </div>
+      {loadingPostsByCategory ? (
+        <LoadingSpinner />
+      ) : postsByCategory.length === 0 ? (
+        <Alert status={"failure"}>{errorPostsByCategory}</Alert>
+      ) : (
+        <div
+          className="flex flex-col justify-center items-center border-t-2 border-black p-4 w-full
+         "
+        >
+          <h1 className="text-xl font-semibold p-2 mb-4 italic">
+            More posts from {post.category} category
+          </h1>
+          <PostsList posts={postsByCategory} />
+        </div>
+      )}
     </div>
   );
 };

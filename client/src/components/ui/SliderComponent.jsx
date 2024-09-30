@@ -1,51 +1,61 @@
-import React, { children } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { useEffect, useState } from "react";
+import PostCard from "../post/PostCard";
+import { MdNavigateBefore } from "react-icons/md";
+import { MdNavigateNext } from "react-icons/md";
 
-const SliderComponent = ({ children }) => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 4000,
-    cssEase: "linear",
-    responsive: [
-      {
-        breakpoint: 1570,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
+const SliderComponent = ({ posts }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 760,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+  const handlePrvClick = () => {
+    setCurrentIndex((prvCurrentIndex) =>
+      prvCurrentIndex === 0 ? posts.length - 1 : prvCurrentIndex - 1
+    );
   };
 
+  const handleNextClick = () => {
+    setCurrentIndex((prvCurrentIndex) =>
+      prvCurrentIndex === posts.length - 1 ? 0 : prvCurrentIndex + 1
+    );
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNextClick();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="p-3 w-[95%] m-auto">
-      <div className="slider-container">
-        <Slider {...settings}>{children}</Slider>
+    <div className="flex flex-col w-full">
+      <div className="flex flex-row items-center p-3 gap-2 ">
+        <button
+          type="button"
+          onClick={handlePrvClick}
+          className="text-2xl p-2 border h-full rounded-full
+         bg-slate-600 bg-opacity-30"
+        >
+          <MdNavigateBefore className="text-cyan-900" />
+        </button>
+        <div className="overflow-hidden">
+          <div className={`flex p-2`}>
+            {posts.map((p) => (
+              <PostCard
+                post={p}
+                key={p._id}
+                className={`-translate-x-[${currentIndex * 100}%]`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleNextClick}
+          className="text-2xl p-2 border h-full rounded-full
+         bg-slate-600 bg-opacity-30"
+        >
+          <MdNavigateNext className="text-cyan-900" />
+        </button>
       </div>
     </div>
   );

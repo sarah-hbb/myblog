@@ -4,7 +4,6 @@ import LoadingSpinner from "../components/ui/LoadingSpinner";
 import Alert from "../components/ui/Alert";
 import CommentsList from "../components/comment/CommentsList";
 import PostsList from "../components/post/PostsList";
-import SliderComponent from "../components/ui/SliderComponent";
 
 const Post = () => {
   const { postSlug } = useParams();

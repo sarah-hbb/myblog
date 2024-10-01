@@ -6,7 +6,7 @@ const NavLinks = ({ className, isInSideBar }) => {
     <div
       className={`transition-all ease-in-out ${className} ${
         isInSideBar
-          ? " px-4 text-xl [&>*]:py-2 [&>*:hover]:text-cyan-800 [&>*:active]:bg-cyan-300 [&>*]:border-b-2 [&>*]:border-cyan-600"
+          ? " px-4 text-xl [&>*]:py-2 [&>*:hover]:text-cyan-800 [&>*:hover]:font-semibold [&>*:active]:bg-cyan-300 [&>*]:border-b-2 [&>*]:border-cyan-600"
           : ""
       }`}
     >

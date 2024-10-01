@@ -45,25 +45,27 @@ const ProfileInHeader = ({ currentUser }) => {
         before:border-b-8 before:border-b-cyan-200
         before:content-['']
         before:absolute
-        before:right-3 before:-top-2
+        before:right-3 before:-top-2 animate-reveal
       `}
       >
         <div
           className="px-3 py-2 w-full flex-col bg-cyan-200 rounded-lg [&>*]:py-2
-           [&>a:hover]:text-cyan-800 [&>a:active]:bg-cyan-300 [&>span]:text-gray-400"
+           [&>a:hover]:text-cyan-800 [&>a:hover]:font-semibold [&>a:active]:bg-cyan-300 [&>span]:text-gray-400"
         >
-          <span>@{currentUser.username}</span>
-          <br />
-          <span className="border-b-2 border-cyan-600">
-            {currentUser.email}
-          </span>
+          <div>@{currentUser.username}</div>
+          <div className="border-b-2 border-cyan-600">{currentUser.email}</div>
           <TextLink
             path="/dashboard?tab=profile"
             className="border-b-2 border-cyan-600"
           >
             Profile
           </TextLink>
-          <div onClick={handleSignout}>Sign out</div>
+          <div
+            onClick={handleSignout}
+            className="hover:text-cyan-800 hover:font-semibold"
+          >
+            Sign out
+          </div>
         </div>
       </div>
     </div>

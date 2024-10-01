@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SliderComponent from "../components/ui/SliderComponent";
+import Carousel from "../components/ui/Carousel";
 
 const Home = () => {
   const [posts, setPost] = useState([]);
@@ -22,8 +22,8 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-7xl mx-auto">
-      <SliderComponent posts={posts} />
+    <div className="w-full mx-auto">
+      <Carousel posts={posts} />
     </div>
   );
 };

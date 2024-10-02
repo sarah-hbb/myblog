@@ -4,6 +4,7 @@ import LoadingSpinner from "../components/ui/LoadingSpinner";
 import Alert from "../components/ui/Alert";
 import CommentsList from "../components/comment/CommentsList";
 import PostsList from "../components/post/PostsList";
+import { useSelector } from "react-redux";
 
 const Post = () => {
   const { postSlug } = useParams();
@@ -14,6 +15,8 @@ const Post = () => {
   const [postsByCategory, setPostsByCategory] = useState([]);
   const [loadingPostsByCategory, setLoadingPostsByCategory] = useState(true);
   const [errorPostsByCategory, setErrorPostsByCategory] = useState(null);
+
+  const { currentUser } = useSelector((state) => state.user);
 
   const fetchPostBySlug = async () => {
     try {
@@ -85,13 +88,24 @@ const Post = () => {
           <h1 className="text-3xl p-6 text-center font-bold italic text-slate-600">
             {post.title}
           </h1>
-          <Link
-            className="text-sm p-3 self-end font-semibold uppercase border border-cyan-400
+          <div className="flex justify-between items-center w-full">
+            {currentUser && currentUser.isAdmin && (
+              <Link
+                to={`/update-post/${post._id}`}
+                className="bg-cyan-700 py-2 px-4 text-white font-normal
+                 hover:bg-black hover:font-bold transition-all rounded "
+              >
+                Edit post
+              </Link>
+            )}
+            <Link
+              className="text-sm p-3 self-end font-semibold uppercase border border-cyan-400
              rounded shadow-cyan-800 shadow-xl hover:scale-105 transition"
-            to={`/search?category=${post.category}`}
-          >
-            {post.category}
-          </Link>
+              to={`/search?category=${post.category}`}
+            >
+              {post.category}
+            </Link>
+          </div>
           <img
             src={post.image}
             alt=""

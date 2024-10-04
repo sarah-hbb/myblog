@@ -6,9 +6,9 @@ const DashboardSidebarTab = ({ children, icon, active, notification }) => {
       className={`${
         active ? "bg-cyan-800 text-cyan-200" : "bg-cyan-100 text-cyan-800"
       } 
-    text-lg flex flex-row items-center justify-between w-full px-2 py-1 rounded-lg gap-1 cursor-pointer`}
+    sm:text-lg flex flex-row items-start justify-between w-full px-2 py-1 rounded-lg gap-1 cursor-pointer`}
     >
-      <div className="flex flex-row items-center gap-1">
+      <div className="flex flex-col sm:flex-row items-center gap-1">
         {icon}
         <span>{children}</span>
       </div>

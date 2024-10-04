@@ -26,6 +26,7 @@ const Dashboard = () => {
       <div>
         <DashboardSidebar isAdmin={currentUser.isAdmin} tab={tab} />
       </div>
+      <div className="border"></div>
       {/* Dashboard */}
       <div className="p-2 w-full">
         <DashboardContent tab={tab} />

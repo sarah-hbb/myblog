@@ -3,6 +3,7 @@ import { IoPersonCircleSharp } from "react-icons/io5";
 import { SiReaddotcv } from "react-icons/si";
 import { PiSignOutFill } from "react-icons/pi";
 import { PiUsersThreeLight } from "react-icons/pi";
+import { BiBookmarkHeart } from "react-icons/bi";
 import DashboardSidebarTab from "./DashboardSidebarTab";
 import useSignout from "../../hooks/useSignout";
 import { useSelector } from "react-redux";
@@ -12,9 +13,9 @@ const DashboardSidebar = ({ tab }) => {
   const { currentUser } = useSelector((state) => state.user);
   return (
     <div
-      className="flex flex-col gap-2 p-2 
-        min-h-full border-b-2 w-full
-        sm:w-60 sm:border-r-2 sm:border-b-0"
+      className="flex p-2 gap-1
+      w-full [&>*]:flex-1
+       sm:flex-col sm:justify-start sm:w-60 sm:gap-2"
     >
       {/* profile tab */}
       <Link to="/dashboard?tab=profile">
@@ -27,7 +28,7 @@ const DashboardSidebar = ({ tab }) => {
         </DashboardSidebarTab>
       </Link>
       {/* Posts tab */}
-      {currentUser.isAdmin && (
+      {currentUser && currentUser.isAdmin && (
         <Link to="/dashboard?tab=posts">
           <DashboardSidebarTab icon={<SiReaddotcv />} active={tab === "posts"}>
             Posts
@@ -35,13 +36,24 @@ const DashboardSidebar = ({ tab }) => {
         </Link>
       )}
       {/* Users tab */}
-      {currentUser.isAdmin && (
+      {currentUser && currentUser.isAdmin && (
         <Link to="/dashboard?tab=users">
           <DashboardSidebarTab
             icon={<PiUsersThreeLight />}
             active={tab === "users"}
           >
             Users
+          </DashboardSidebarTab>
+        </Link>
+      )}
+      {/* Bookmarks posts tab */}
+      {currentUser && !currentUser.isAdmin && (
+        <Link to="/dashboard?tab=bookmarks">
+          <DashboardSidebarTab
+            icon={<BiBookmarkHeart />}
+            active={tab === "bookmarks"}
+          >
+            Bookmarks
           </DashboardSidebarTab>
         </Link>
       )}

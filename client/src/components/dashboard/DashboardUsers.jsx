@@ -8,7 +8,7 @@ import { CiWarning } from "react-icons/ci";
 
 const DashboardUsers = () => {
   const [users, setUsers] = useState([]);
-  const [showMore, setShowMore] = useState(true);
+  const [totalUsers, setTotalUsers] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
 
@@ -20,9 +20,7 @@ const DashboardUsers = () => {
       const data = await res.json();
       if (res.ok) {
         setUsers(data.users);
-        if (data.users.length < 9) {
-          setShowMore(false);
-        }
+        setTotalUsers(data.totalUsers);
       }
     } catch (error) {
       console.log(error);
@@ -41,9 +39,6 @@ const DashboardUsers = () => {
       const data = await res.json();
       if (res.ok) {
         setUsers((prvUsers) => [...prvUsers, ...data.users]);
-        if (data.users.length < 9) {
-          setShowMore(false);
-        }
       }
     } catch (error) {
       console.log(error);
@@ -124,7 +119,7 @@ const DashboardUsers = () => {
           </div>
         ))}
 
-        {showMore && (
+        {totalUsers > users.length && (
           <button
             type="button"
             className="font-bold text-lg text-cyan-600 p-4 self-center

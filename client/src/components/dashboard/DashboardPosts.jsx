@@ -7,7 +7,7 @@ import { CiWarning } from "react-icons/ci";
 
 const DashboardPosts = () => {
   const [userPosts, setUserPosts] = useState([]);
-  const [showMore, setShowMore] = useState(false);
+  const [totalPosts, setTotalPosts] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState("");
 
@@ -19,9 +19,7 @@ const DashboardPosts = () => {
       const data = await res.json();
       if (res.ok) {
         setUserPosts(data.posts);
-        if (data.posts.length > 8) {
-          setShowMore(true);
-        }
+        setTotalPosts(data.totalPosts);
       }
     } catch (error) {
       console.log(error);
@@ -43,9 +41,6 @@ const DashboardPosts = () => {
       const data = await res.json();
       if (res.ok) {
         setUserPosts((prv) => [...prv, ...data.posts]);
-        if (data.posts.length < 9) {
-          setShowMore(false);
-        }
       }
     } catch (error) {}
   };
@@ -115,7 +110,7 @@ const DashboardPosts = () => {
             </div>
           </div>
         ))}
-        {showMore && (
+        {totalPosts > userPosts.length && (
           <button
             type="button"
             className="font-bold text-lg text-cyan-600 p-4 self-center

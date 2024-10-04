@@ -3,7 +3,7 @@ import { FiSearch } from "react-icons/fi";
 
 const Searchbar = () => {
   return (
-    <form className="bg-red relative bg-cyan-100 px-3 rounded-2xl flex items-center gap-1 w-2/5">
+    <form className="bg-red relative bg-cyan-100 px-3 rounded-2xl flex items-center gap-1 lg:w-2/5">
       <input
         type="text"
         name="search"

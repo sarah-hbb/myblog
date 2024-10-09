@@ -68,6 +68,7 @@ const getPosts = async (req, res, next) => {
     const lastMonthPostsCount = await Post.countDocuments({
       createdAt: { $gte: oneMonthAgo },
     });
+
     res
       .status(200)
       .json({ posts, lastMonthPosts, lastMonthPostsCount, totalPosts });
@@ -112,4 +113,28 @@ const updatepost = async (req, res, next) => {
   }
 };
 
-module.exports = { create, getPosts, deletepost, updatepost };
+// Bookmark/unbookmark a post
+const bookmarkPost = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) {
+      return next(errorHandler(404, "post not found!"));
+    }
+    const currentUserIndex = post.bookmarks.indexOf(req.user.id);
+    if (currentUserIndex === -1) {
+      post.bookmarks.push(req.user.id);
+      post.numberOfBookmarks += 1;
+    } else {
+      post.bookmarks.splice(currentUserIndex, 1);
+      post.numberOfBookmarks -= 1;
+    }
+
+    await post.save();
+
+    res.status(200).json(post);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { create, getPosts, deletepost, updatepost, bookmarkPost };

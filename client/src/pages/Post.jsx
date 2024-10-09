@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import Alert from "../components/ui/Alert";
 import CommentsList from "../components/comment/CommentsList";
 import PostsList from "../components/post/PostsList";
-import { useSelector } from "react-redux";
+import { PiBookmarkSimpleDuotone } from "react-icons/pi";
+import useBookmark from "../hooks/useBookmark";
 
 const Post = () => {
   const { postSlug } = useParams();
@@ -17,6 +19,7 @@ const Post = () => {
   const [errorPostsByCategory, setErrorPostsByCategory] = useState(null);
 
   const { currentUser } = useSelector((state) => state.user);
+  const { handleBookmark } = useBookmark();
 
   const fetchPostBySlug = async () => {
     try {
@@ -89,22 +92,44 @@ const Post = () => {
             {post.title}
           </h1>
           <div className="flex justify-between items-center w-full">
-            {currentUser && currentUser.isAdmin && (
-              <Link
-                to={`/update-post/${post._id}`}
-                className="bg-cyan-700 py-2 px-4 text-white font-normal
+            <div className="flex gap-3">
+              {currentUser && currentUser.isAdmin && (
+                <Link
+                  to={`/update-post/${post._id}`}
+                  className="bg-cyan-700 py-2 px-4 text-white font-normal
                  hover:bg-black hover:font-bold transition-all rounded "
-              >
-                Edit post
-              </Link>
-            )}
-            <Link
-              className="text-sm p-3 self-end font-semibold uppercase border border-cyan-400
+                >
+                  Edit post
+                </Link>
+              )}
+              <Link
+                className="text-sm p-3 self-end font-semibold uppercase border border-cyan-400
              rounded shadow-cyan-800 shadow-xl hover:scale-105 transition"
-              to={`/search?category=${post.category}`}
-            >
-              {post.category}
-            </Link>
+                to={`/search?category=${post.category}`}
+              >
+                {post.category}
+              </Link>
+            </div>
+            <div className="flex flex-row items-center justify-center gap-3">
+              <button onClick={() => handleBookmark(post, setPost)}>
+                <PiBookmarkSimpleDuotone
+                  className={`text-3xl ${
+                    post.bookmarks.includes(currentUser?._id)
+                      ? "text-amber-400"
+                      : "text-slate-400"
+                  } `}
+                />
+              </button>
+              {post.numberOfBookmarks !== 0 && (
+                <span className="text-amber-400 font-semibold uppercase">
+                  {post.numberOfBookmarks === 1
+                    ? `${post.numberOfBookmarks} bookmark`
+                    : post.numberOfBookmarks > 1
+                    ? `${post.numberOfBookmarks} bookmarks`
+                    : ""}
+                </span>
+              )}
+            </div>
           </div>
           <img
             src={post.image}
@@ -139,7 +164,9 @@ const Post = () => {
           <h1 className="text-xl font-semibold p-2 mb-4 italic">
             More posts from {post.category} category
           </h1>
-          <PostsList posts={postsByCategory} />
+          <PostsList
+            posts={postsByCategory.filter((p) => p._id !== post._id)}
+          />
         </div>
       )}
     </div>

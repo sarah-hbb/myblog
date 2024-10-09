@@ -1,13 +1,42 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { PiBookmarkSimpleDuotone } from "react-icons/pi";
 
 const PostCard = ({ post, className }) => {
+  const { currentUser } = useSelector((state) => state.user);
+  const [bookmarked, setBookmarked] = useState(() =>
+    post.bookmarks.includes(currentUser._id)
+  );
+
+  const handleBookmark = async () => {
+    try {
+      if (currentUser) {
+        const res = await fetch(`/api/post/bookmarkpost/${post._id}`, {
+          method: "PUT",
+        });
+        if (res.ok) {
+          setBookmarked((prv) => !prv);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div
-      className={`border border-gray-200 rounded-md relative min-w-full md:min-w-96 h-60
+      className={`border border-gray-200 rounded-md relative w-full md:w-96 min-w-96 h-60
       shadow-lg shadow-slate-500 hover:shadow-slate-900 hover:scale-105
        transition-all ${className}
       group`}
     >
+      <PiBookmarkSimpleDuotone
+        className={`${
+          bookmarked ? "text-yellow-300" : "text-slate-400"
+        } absolute right-0 m-1 text-4xl `}
+        onClick={handleBookmark}
+      />
       <Link
         to={`/post/${post.slug}`}
         className="flex flex-col justify-between w-full h-full "
@@ -27,10 +56,6 @@ const PostCard = ({ post, className }) => {
        "
           >
             {post.title}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-            ad, quis possimus aut provident laboriosam quam dolorem perferendis
-            ipsa eaque consectetur aspernatur accusantium distinctio vel iure
-            qui vitae optio tempora!
           </h1>
           <h4 className="text-slate-200 font-thin italic">{post.category}</h4>
           <div

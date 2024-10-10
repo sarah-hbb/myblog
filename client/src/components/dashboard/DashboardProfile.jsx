@@ -21,12 +21,12 @@ import {
   deleteAccountSuccess,
   deleteAccountFailure,
 } from "../../redux/user/userSlice";
-import { CiWarning } from "react-icons/ci";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Modal from "../ui/Modal";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import useSignout from "../../hooks/useSignout";
-import { useNavigate } from "react-router-dom";
+import { CiWarning } from "react-icons/ci";
 
 const DashboardProfile = () => {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -257,19 +257,10 @@ const DashboardProfile = () => {
             inverseColor={false}
             disabled={loading || imageFileUoloading}
           >
-            <span>{loading ? "Loading..." : "Update Profile"}</span>
+            <span className="hover:font-semibold transition-all">
+              {loading ? "Loading..." : "Update Profile"}
+            </span>
           </Button>
-          {currentUser.isAdmin && (
-            <Button
-              type="button"
-              inverseColor={true}
-              onClick={() => {
-                navigate("/create-post");
-              }}
-            >
-              <span>Create a post</span>
-            </Button>
-          )}
 
           {updateUserSuccess && !imageFileUploadError && (
             <Alert status="success">{updateUserSuccess}</Alert>
@@ -280,10 +271,18 @@ const DashboardProfile = () => {
           {error && <Alert status="failure">{error}</Alert>}
         </div>
         <div className="flex justify-between w-full px-4 py-2 text-red-600">
-          <button onClick={() => setModalIsOpen(true)} type="button">
+          <button
+            onClick={() => setModalIsOpen(true)}
+            type="button"
+            className="hover:font-semibold transition-all"
+          >
             Delete Account
           </button>
-          <button type="button" onClick={handleSignout}>
+          <button
+            type="button"
+            onClick={handleSignout}
+            className="hover:font-semibold transition-all"
+          >
             Sign out
           </button>
         </div>

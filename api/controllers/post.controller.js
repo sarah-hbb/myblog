@@ -137,4 +137,26 @@ const bookmarkPost = async (req, res, next) => {
   }
 };
 
-module.exports = { create, getPosts, deletepost, updatepost, bookmarkPost };
+// get the bookmarks that bookmarked by a user
+const getMyBookmarks = async (req, res, next) => {
+  try {
+    if (req.user.id !== req.params.userId) {
+      return next(errorHandler(403, "You are unauthorized to see bookmarks"));
+    }
+    const bookmarkedPosts = await Post.find({
+      bookmarks: { $in: [req.params.userId] },
+    });
+    res.status(200).json(bookmarkedPosts);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  create,
+  getPosts,
+  deletepost,
+  updatepost,
+  bookmarkPost,
+  getMyBookmarks,
+};

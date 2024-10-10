@@ -42,7 +42,7 @@ const Home = () => {
               <div
                 key={index}
                 className="flex justify-between gap-3 p-2 min-w-full
-          hover:scale-105 transition-all"
+                hover:scale-105 transition-all"
               >
                 <Link
                   to={`/post/${post.slug}`}

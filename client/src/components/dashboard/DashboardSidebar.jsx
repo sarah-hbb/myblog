@@ -4,6 +4,7 @@ import { SiReaddotcv } from "react-icons/si";
 import { PiSignOutFill } from "react-icons/pi";
 import { PiUsersThreeLight } from "react-icons/pi";
 import { BiBookmarkHeart } from "react-icons/bi";
+import { IoIosNotificationsOutline } from "react-icons/io";
 import DashboardSidebarTab from "./DashboardSidebarTab";
 import useSignout from "../../hooks/useSignout";
 import { useSelector } from "react-redux";
@@ -43,6 +44,17 @@ const DashboardSidebar = ({ tab }) => {
             active={tab === "users"}
           >
             Users
+          </DashboardSidebarTab>
+        </Link>
+      )}
+      {/* Notifications tab */}
+      {currentUser && currentUser.isAdmin && (
+        <Link to="/dashboard?tab=notifications">
+          <DashboardSidebarTab
+            icon={<IoIosNotificationsOutline />}
+            active={tab === "notifications"}
+          >
+            Notifications
           </DashboardSidebarTab>
         </Link>
       )}

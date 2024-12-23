@@ -13,7 +13,12 @@ const NavLinks = ({ className, isInSideBar }) => {
       }`}
     >
       <TextLink path="/">Home</TextLink>
-      <TextLink path="/about">About</TextLink>
+      {currentUser && currentUser.isAdmin ? (
+        <TextLink path="/dashboard?tab=notifications"> Notifications </TextLink>
+      ) : (
+        <TextLink path="/about"> About </TextLink>
+      )}
+
       {currentUser && currentUser.isAdmin && (
         <TextLink path="/create-post">Create Post</TextLink>
       )}

@@ -6,7 +6,7 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Projects from "./pages/Projects";
 import Post from "./pages/Post";
-
+import Search from "./pages/Search";
 import Layout from "./components/layout/Layout";
 import ScrollToTop from "./components/ui/ScrollToTop";
 import PrivateRoute from "./components/PrivateRoute";
@@ -24,6 +24,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/post/:postSlug" element={<Post />} />
+          <Route path="/search" element={<Search />} />
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
@@ -31,7 +33,6 @@ function App() {
             <Route path="/create-post" element={<CreatePost />} />
             <Route path="/update-post/:postId" element={<UpdatePost />} />
           </Route>
-          <Route path="/post/:postSlug" element={<Post />} />
           <Route path="/projects" element={<Projects />} />
         </Routes>
       </Layout>

@@ -2,6 +2,7 @@ import DashboardProfile from "./DashboardProfile";
 import DashboardPosts from "./DashboardPosts";
 import DashboardUsers from "./DashboardUsers";
 import DashboardBookmarks from "./DashboardBookmarks";
+import DashboardNotifications from "./DashboardNotifications";
 
 const DashboardContent = ({ tab }) => {
   return (
@@ -10,6 +11,7 @@ const DashboardContent = ({ tab }) => {
       {tab === "posts" && <DashboardPosts />}
       {tab === "users" && <DashboardUsers />}
       {tab === "bookmarks" && <DashboardBookmarks />}
+      {tab === "notifications" && <DashboardNotifications />}
     </div>
   );
 };

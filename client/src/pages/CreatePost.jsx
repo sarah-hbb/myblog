@@ -1,9 +1,16 @@
 import { useState } from "react";
-import ReactQuill from "react-quill";
+import { useNavigate } from "react-router-dom";
+// React-quill
 import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
+// UI
 import Input from "../components/ui/Input";
 import Select from "../components/ui/Select";
 import Button from "../components/ui/Button";
+import Alert from "../components/ui/Alert";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+// firebase
 import {
   getDownloadURL,
   getStorage,
@@ -11,10 +18,6 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
-import Alert from "../components/ui/Alert";
-import { CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
   const [file, setFile] = useState(null);
@@ -107,6 +110,23 @@ const CreatePost = () => {
     { value: "github", label: "Git-hub" },
     { value: "travel", label: "Travel" },
   ];
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image"],
+      ["clean"],
+      ["code-block"],
+    ],
+  };
+
   return (
     <div
       className="flex flex-col justify-center items-center
@@ -178,9 +198,11 @@ const CreatePost = () => {
 
         <ReactQuill
           theme="snow"
+          modules={modules}
           onChange={(value) => setFormData({ ...formData, content: value })}
           placeholder="Write your post..."
         />
+
         {publishError && <Alert status="failure">{publishError}</Alert>}
         <Button type="submit" className="w-1/5 self-end">
           Publish

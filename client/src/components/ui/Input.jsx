@@ -1,6 +1,7 @@
 import React from "react";
 
 const Input = ({
+  className,
   value,
   label,
   type,
@@ -11,7 +12,7 @@ const Input = ({
   defaultValue,
 }) => {
   return (
-    <div className="flex flex-col w-full">
+    <div className={`${className} flex flex-col w-full`}>
       <label className=" text-cyan-600 font-bold mb-1">{label}</label>
       <input
         placeholder={placeholder}

@@ -9,11 +9,7 @@ import { FiSearch } from "react-icons/fi";
 
 const Search = () => {
   const [loading, setLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState({
-    searchTerm: "",
-    order: "desc",
-    category: "uncategorized",
-  });
+  const [searchQuery, setSearchQuery] = useState({});
   const [searchPosts, setSearchPosts] = useState([]);
 
   const navigate = useNavigate();
@@ -41,7 +37,9 @@ const Search = () => {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set("searchTerm", searchQuery.searchTerm);
     urlParams.set("order", searchQuery.order);
-    urlParams.set("category", searchQuery.category);
+    if (searchQuery.category) {
+      urlParams.set("category", searchQuery.category);
+    }
     const searchParams = urlParams.toString();
     navigate(`/search?${searchParams}`);
     console.log(searchParams);

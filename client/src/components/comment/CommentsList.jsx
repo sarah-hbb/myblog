@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import CreateComment from "./CreateComment";
 
 import Comment from "./Comment";
@@ -11,6 +11,7 @@ const CommentsList = ({ postId }) => {
 
   const { currentUser } = useSelector((state) => state.user);
   const { navigate } = useNavigate();
+  const location = useLocation();
 
   const fetchComments = async () => {
     try {
@@ -123,6 +124,7 @@ const CommentsList = ({ postId }) => {
         >
           <Link
             to="/signin"
+            state={{ from: location }}
             className="text-cyan-600 hover:underline font-semibold"
           >
             Sign-in

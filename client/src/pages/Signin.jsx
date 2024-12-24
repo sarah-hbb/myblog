@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Input from "../components/ui/Input";
 import logo from "../assets/logo.png";
 import Button from "../components/ui/Button";
@@ -28,6 +28,8 @@ const Signin = () => {
   const [submitClicked, setSubmitClicked] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const dispatch = useDispatch();
 
@@ -63,7 +65,7 @@ const Signin = () => {
 
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate("/");
+        navigate(from, { replace: true });
       }
     } catch (error) {
       // setErrorMesssage(error.message);

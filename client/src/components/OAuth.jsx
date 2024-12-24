@@ -5,11 +5,13 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const OAuth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleGoogleClick = async () => {
     const auth = getAuth(app);
@@ -31,7 +33,7 @@ const OAuth = () => {
       const data = await res.json();
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate("/");
+        navigate(from, { replace: true });
       }
     } catch (error) {
       console.log(error);

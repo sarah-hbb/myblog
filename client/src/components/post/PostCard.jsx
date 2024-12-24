@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PiBookmarkSimpleDuotone } from "react-icons/pi";
 
 const PostCard = ({ post, className }) => {
   const { currentUser } = useSelector((state) => state.user);
-  const [bookmarked, setBookmarked] = useState(() =>
-    post.bookmarks.includes(currentUser._id)
-  );
+  const [bookmarked, setBookmarked] = useState();
 
   const handleBookmark = async () => {
     try {
@@ -23,6 +21,12 @@ const PostCard = ({ post, className }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      setBookmarked(post.bookmarks.includes(currentUser._id));
+    }
+  }, [currentUser]);
 
   return (
     <div

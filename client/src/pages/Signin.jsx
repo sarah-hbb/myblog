@@ -65,7 +65,7 @@ const Signin = () => {
 
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate(from, { replace: true });
+        navigate(from, { replace: true, state: { fromSignin: true } });
       }
     } catch (error) {
       // setErrorMesssage(error.message);

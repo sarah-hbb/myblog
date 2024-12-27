@@ -33,7 +33,7 @@ const OAuth = () => {
       const data = await res.json();
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate(from, { replace: true });
+        navigate(from, { replace: true, state: { fromSignin: true } });
       }
     } catch (error) {
       console.log(error);

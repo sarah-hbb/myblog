@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import Alert from "../components/ui/Alert";
@@ -20,6 +20,8 @@ const Post = () => {
 
   const { currentUser } = useSelector((state) => state.user);
   const { handleBookmark } = useBookmark();
+  const location = useLocation();
+  const commentsRef = useRef();
 
   const fetchPostBySlug = async () => {
     try {
@@ -73,6 +75,14 @@ const Post = () => {
       fetchPostsByCategory();
     }
   }, [postCategory]);
+
+  useEffect(() => {
+    if (location.state?.fromSignin) {
+      commentsRef.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [location]);
 
   return (
     <div className="flex flex-col justify-center items-center pt-4">
@@ -149,7 +159,10 @@ const Post = () => {
       )}
 
       {/* Comments setion */}
-      <div className="flex flex-col w-full max-w-3xl mx-auto self-start p-2 mt-2 gap-4">
+      <div
+        ref={commentsRef}
+        className="flex flex-col w-full max-w-3xl mx-auto self-start p-2 mt-2 gap-4"
+      >
         <CommentsList postId={post._id} />
       </div>
       {loadingPostsByCategory ? (

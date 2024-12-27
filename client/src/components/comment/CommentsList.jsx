@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import CreateComment from "./CreateComment";
@@ -12,6 +12,7 @@ const CommentsList = ({ postId }) => {
   const { currentUser } = useSelector((state) => state.user);
   const { navigate } = useNavigate();
   const location = useLocation();
+  const commentRef = useRef();
 
   const fetchComments = async () => {
     try {
@@ -34,7 +35,7 @@ const CommentsList = ({ postId }) => {
   const handleLikeComment = async (commentId) => {
     try {
       if (!currentUser) {
-        navigate("/signin");
+        navigate("/signin", { state: { from: location }, replace: true });
         return;
       }
       const res = await fetch(`/api/comment/likecomment/${commentId}`, {

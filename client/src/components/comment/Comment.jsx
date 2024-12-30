@@ -44,24 +44,9 @@ const Comment = ({ comment, currentUser, onDelete, onLike, onEdit }) => {
     setUpdatedContent(comment.content);
   };
 
-  const handleUpdateComment = async () => {
-    try {
-      const res = await fetch(`/api/comment/editcomment/${comment._id}`, {
-        method: "PUT",
-        body: JSON.stringify({
-          content: updatedContent,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (res.ok) {
-        setEditMode(false);
-        onEdit(comment, updatedContent);
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
+  const handleUpdateComment = () => {
+    setEditMode(false);
+    onEdit(comment, updatedContent);
   };
 
   return (
@@ -115,20 +100,24 @@ const Comment = ({ comment, currentUser, onDelete, onLike, onEdit }) => {
           >
             {/* Like btn */}
             <div className="flex items-center gap-1">
-              <button
-                type="button"
-                className="hover:scale-125 transition-all"
-                disabled={editMode}
-                onClick={() => onLike(comment._id)}
-              >
-                <AiFillLike
-                  className={`${
-                    currentUser && comment.likes.includes(currentUser._id)
-                      ? "text-cyan-700"
-                      : ""
-                  } text-lg hover:-rotate-12 hover:text-cyan-500 transition-all `}
-                />
-              </button>
+              {currentUser && (
+                <button
+                  type="button"
+                  className=" transition-all"
+                  disabled={editMode}
+                  onClick={() => onLike(comment._id)}
+                >
+                  <AiFillLike
+                    className={`${
+                      currentUser && comment.likes.includes(currentUser._id)
+                        ? "text-cyan-700"
+                        : ""
+                    } "hover:text-cyan-500 transition-all hover:scale-125 text-lg hover:-rotate-12"
+                      
+                   `}
+                  />
+                </button>
+              )}
 
               {comment.numberOfLikes > 0 && (
                 <h3>

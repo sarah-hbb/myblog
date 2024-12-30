@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import CreateComment from "./CreateComment";
@@ -12,7 +12,6 @@ const CommentsList = ({ postId }) => {
   const { currentUser } = useSelector((state) => state.user);
   const { navigate } = useNavigate();
   const location = useLocation();
-  const commentRef = useRef();
 
   const fetchComments = async () => {
     try {
@@ -82,12 +81,27 @@ const CommentsList = ({ postId }) => {
     }
   };
 
-  const handleEditComment = (comment, updatedContent) => {
-    setComments(
-      comments.map((c) =>
-        c._id === comment._id ? { ...c, content: updatedContent } : c
-      )
-    );
+  const handleEditComment = async (comment, updatedContent) => {
+    try {
+      const res = await fetch(`/api/comment/editcomment/${comment._id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          content: updatedContent,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        setComments(
+          comments.map((c) =>
+            c._id === comment._id ? { ...c, content: updatedContent } : c
+          )
+        );
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const handleShowMore = async () => {

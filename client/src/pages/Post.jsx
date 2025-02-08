@@ -7,6 +7,8 @@ import CommentsList from "../components/comment/CommentsList";
 import PostsList from "../components/post/PostsList";
 import { PiBookmarkSimpleDuotone } from "react-icons/pi";
 import useBookmark from "../hooks/useBookmark";
+import hljs from "highlight.js";
+import "highlight.js/styles/monokai-sublime.css"; // Monokai theme
 
 const Post = () => {
   const { postSlug } = useParams();
@@ -83,6 +85,13 @@ const Post = () => {
       });
     }
   }, [location]);
+
+  // Apply highlight.js to all <pre><code> blocks after rendering
+  useEffect(() => {
+    document.querySelectorAll("pre code").forEach((block) => {
+      hljs.highlightBlock(block);
+    });
+  }, [post]);
 
   return (
     <div className="flex flex-col justify-center items-center pt-4">

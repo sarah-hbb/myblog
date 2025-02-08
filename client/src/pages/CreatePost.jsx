@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// React-quill
-import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
+// in case of using React-quill
+//import "react-quill/dist/quill.snow.css";
+//import ReactQuill from "react-quill";
+import TextEditor from "../components/textEditor/TextEditor";
+
 // UI
 import Input from "../components/ui/Input";
 import Select from "../components/ui/Select";
@@ -196,11 +198,15 @@ const CreatePost = () => {
           )}
         </div>
 
-        <ReactQuill
+        {/* <ReactQuill
           theme="snow"
           modules={modules}
           onChange={(value) => setFormData({ ...formData, content: value })}
           placeholder="Write your post..."
+        /> */}
+
+        <TextEditor
+          onChange={(value) => setFormData({ ...formData, content: value })}
         />
 
         {publishError && <Alert status="failure">{publishError}</Alert>}

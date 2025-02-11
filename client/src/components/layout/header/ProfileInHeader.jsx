@@ -45,11 +45,11 @@ const ProfileInHeader = ({ currentUser }) => {
         before:border-b-8 before:border-b-cyan-200
         before:content-['']
         before:absolute
-        before:right-3 before:-top-2 animate-reveal
+        before:right-3 before:-top-2 animate-dropdown
       `}
       >
         <div
-          className="px-3 py-2 w-full flex-col bg-cyan-200 rounded-lg [&>*]:py-2
+          className="cursor-default px-3 py-2 w-full flex-col bg-cyan-200 rounded-lg [&>*]:py-2
            [&>a:hover]:text-cyan-800 [&>a:hover]:font-semibold [&>a:active]:bg-cyan-300 [&>span]:text-gray-400"
         >
           <div>@{currentUser.username}</div>

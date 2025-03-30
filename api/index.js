@@ -18,7 +18,6 @@ mongoose
   .catch((err) => console.log(err));
 
 //const __dirname = path.resolve();
-
 const app = express();
 
 app.listen(3000, () => {
@@ -37,9 +36,9 @@ app.use("/api/post", postRoutes);
 app.use("/api/comment", commentRoutes);
 app.use("/api/summary", summaryRoutes);
 
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static(path.join(__dirname, "../client/build")));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
 });
 
 app.use((err, req, res, next) => {

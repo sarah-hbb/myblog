@@ -23,7 +23,7 @@ const Post = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { handleBookmark } = useBookmark();
   const location = useLocation();
-  const commentsRef = useRef();
+  const commentsRef = useRef(null);
 
   const fetchPostBySlug = async () => {
     try {
@@ -80,8 +80,10 @@ const Post = () => {
 
   useEffect(() => {
     if (location.state?.fromSignin) {
-      commentsRef.current?.scrollIntoView({
-        behavior: "smooth",
+      requestAnimationFrame(() => {
+        commentsRef.current?.scrollIntoView({
+          behavior: "smooth",
+        });
       });
     }
   }, [location]);
@@ -168,11 +170,8 @@ const Post = () => {
       )}
 
       {/* Comments setion */}
-      <div
-        ref={commentsRef}
-        className="flex flex-col w-full max-w-3xl mx-auto self-start p-2 mt-2 gap-4"
-      >
-        <CommentsList postId={post._id} />
+      <div className="flex flex-col w-full max-w-3xl mx-auto self-start p-2 mt-2 gap-4">
+        <CommentsList postId={post._id} ref={commentsRef} />
       </div>
       {loadingPostsByCategory ? (
         <LoadingSpinner />

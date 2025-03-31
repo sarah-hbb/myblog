@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import CreateComment from "./CreateComment";
 
 import Comment from "./Comment";
 
-const CommentsList = ({ postId }) => {
+const CommentsList = forwardRef(({ postId }, ref) => {
   const [comments, setComments] = useState([]);
   const [totalComments, setTotalComments] = useState();
 
@@ -120,7 +120,7 @@ const CommentsList = ({ postId }) => {
   };
 
   return (
-    <div>
+    <div ref={ref}>
       {currentUser ? (
         <CreateComment
           postId={postId}
@@ -186,6 +186,6 @@ const CommentsList = ({ postId }) => {
       </div>
     </div>
   );
-};
+});
 
 export default CommentsList;

@@ -131,7 +131,7 @@ const Post = () => {
                 {post.category}
               </Link>
             </div>
-            <div className="flex flex-row items-center justify-center gap-3">
+            <div className="flex flex-row items-center justify-center gap-1">
               <button onClick={() => handleBookmark(post, setPost)}>
                 <PiBookmarkSimpleDuotone
                   className={`text-3xl ${
@@ -142,13 +142,12 @@ const Post = () => {
                 />
               </button>
               {post.numberOfBookmarks !== 0 && (
-                <span className="text-amber-400 font-semibold uppercase">
-                  {post.numberOfBookmarks === 1
-                    ? `${post.numberOfBookmarks} bookmark`
-                    : post.numberOfBookmarks > 1
-                    ? `${post.numberOfBookmarks} bookmarks`
-                    : ""}
-                </span>
+                <div className="text-amber-400 font-semibold uppercase">
+                  <span>{Post.numberOfBookmarks}</span>
+                  <span className="sm:block hidden">{`${
+                    post.numberOfBookmarks === 1 ? "bookmark" : "bookmarks`"
+                  }`}</span>
+                </div>
               )}
             </div>
           </div>

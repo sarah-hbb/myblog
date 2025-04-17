@@ -30,7 +30,7 @@ const PostCard = ({ post, className }) => {
 
   return (
     <div
-      className={`border border-gray-200 rounded-md relative w-full md:w-96 min-w-96 h-60
+      className={`p-2 border border-gray-200 rounded-md relative w-full md:w-96 min-w-80 h-60
       shadow-lg shadow-slate-500 hover:shadow-slate-900 hover:scale-105
        transition-all ${className}
       group`}

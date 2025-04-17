@@ -143,7 +143,7 @@ const Post = () => {
               </button>
               {post.numberOfBookmarks !== 0 && (
                 <div className="text-amber-400 font-semibold uppercase">
-                  <span>{Post.numberOfBookmarks}</span>
+                  <span>{post.numberOfBookmarks}</span>
                   <span className="sm:block hidden">{`${
                     post.numberOfBookmarks === 1 ? "bookmark" : "bookmarks`"
                   }`}</span>
@@ -174,19 +174,20 @@ const Post = () => {
       </div>
       {loadingPostsByCategory ? (
         <LoadingSpinner />
-      ) : postsByCategory.length === 0 ? (
-        <Alert status={"failure"}>{errorPostsByCategory}</Alert>
       ) : (
-        <div
-          className="flex flex-col justify-center items-center border-t-2 border-black p-4 w-full
-         "
-        >
-          <h1 className="text-xl font-semibold p-2 mb-4 italic">
-            More posts from {post.category} category
-          </h1>
-          <PostsList
-            posts={postsByCategory.filter((p) => p._id !== post._id)}
-          />
+        <div>
+          {postsByCategory.length === 0 ? (
+            <Alert status={"failure"}>{errorPostsByCategory}</Alert>
+          ) : (
+            <div className="flex flex-col justify-center items-center border-t-2 border-black p-4 w-full">
+              <h1 className="text-xl font-semibold p-2 mb-4 italic">
+                More posts from {post.category} category
+              </h1>
+              <PostsList
+                posts={postsByCategory.filter((p) => p._id !== post._id)}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>

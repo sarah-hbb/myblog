@@ -69,13 +69,6 @@ const DashboardSidebar = ({ tab }) => {
           </DashboardSidebarTab>
         </Link>
       )}
-
-      {/* Signout tab */}
-      <div onClick={handleSignout}>
-        <DashboardSidebarTab icon={<PiSignOutFill />} active={false}>
-          Sign out
-        </DashboardSidebarTab>
-      </div>
     </div>
   );
 };

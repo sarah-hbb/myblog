@@ -65,16 +65,13 @@ const DashboardUsers = () => {
   };
 
   return (
-    <div
-      className="flex flex-col items-center justify-center w-full
-       "
-    >
+    <div className="flex flex-col items-center justify-center w-full">
       <div
         className="flex flex-col justify-between items-center gap-1 p-2 w-full
        lg:max-w-7xl lg:mx-auto lg:p-10 lg:shadow-2xl 
       [&>*:not(:last-child)]:border-b [&>*]:border-gray-300 last:border-b-0"
       >
-        <div className="flex flex-row w-full bg-gray-200 font-bold p-1">
+        <div className="flex flex-row w-full bg-gray-200 font-bold p-1 gap-2">
           <h1 className="w-3/6 ">User</h1>
           <h1 className="w-1/6">created</h1>
           <h1 className="w-1/6">admin</h1>
@@ -85,7 +82,7 @@ const DashboardUsers = () => {
             key={index}
             className="flex flex-row justify-between w-full hover:scale-105 transition-all"
           >
-            <div className="flex flex-col w-3/6 flex-wrap gap-1">
+            <div className="flex flex-col w-3/6 flex-wrap gap-2">
               <div className="flex gap-2 ">
                 <img
                   src={user.profilePicture}

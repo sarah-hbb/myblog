@@ -145,7 +145,7 @@ const Post = () => {
                 <div className="text-amber-400 font-semibold uppercase">
                   <span>{post.numberOfBookmarks}</span>
                   <span className="sm:block hidden">{`${
-                    post.numberOfBookmarks === 1 ? "bookmark" : "bookmarks`"
+                    post.numberOfBookmarks === 1 ? "bookmark" : "bookmarks"
                   }`}</span>
                 </div>
               )}

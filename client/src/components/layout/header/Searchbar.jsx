@@ -9,6 +9,7 @@ const Searchbar = () => {
   const location = useLocation();
 
   useEffect(() => {
+    setSearchTerm("");
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get("searchTerm");
     if (searchTermFromUrl) {

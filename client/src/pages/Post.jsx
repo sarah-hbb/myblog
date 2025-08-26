@@ -78,6 +78,7 @@ const Post = () => {
     }
   }, [postCategory]);
 
+  // Scroll to comments section if user came from signin page
   useEffect(() => {
     if (location.state?.fromSignin) {
       setTimeout(() => {
@@ -85,12 +86,6 @@ const Post = () => {
           behavior: "smooth",
         });
       }, 1000);
-
-      // requestAnimationFrame(() => {
-      //   commentsRef.current?.scrollIntoView({
-      //     behavior: "smooth",
-      //   });
-      // });
     }
   }, [location]);
 
@@ -106,7 +101,7 @@ const Post = () => {
       {loading ? (
         <LoadingSpinner />
       ) : error ? (
-        <Alert status="failure" className="w-1/2">
+        <Alert status="failure" className="w-1/4 text-center">
           {error}
         </Alert>
       ) : (
@@ -137,7 +132,17 @@ const Post = () => {
                 {post.category}
               </Link>
             </div>
+
+            {/* bookmarks section */}
             <div className="flex flex-row items-center justify-center gap-1">
+              {post.numberOfBookmarks !== 0 && (
+                <div className="text-amber-400 font-semibold uppercase flex flex-row  gap-1">
+                  <span>{post.numberOfBookmarks}</span>
+                  <span className="sm:block hidden">{`${
+                    post.numberOfBookmarks === 1 ? "bookmark" : "bookmarks"
+                  }`}</span>
+                </div>
+              )}
               <button onClick={() => handleBookmark(post, setPost)}>
                 <PiBookmarkSimpleDuotone
                   className={`text-3xl ${
@@ -147,14 +152,6 @@ const Post = () => {
                   } `}
                 />
               </button>
-              {post.numberOfBookmarks !== 0 && (
-                <div className="text-amber-400 font-semibold uppercase">
-                  <span>{post.numberOfBookmarks}</span>
-                  <span className="sm:block hidden">{`${
-                    post.numberOfBookmarks === 1 ? "bookmark" : "bookmarks"
-                  }`}</span>
-                </div>
-              )}
             </div>
           </div>
           <img
@@ -171,30 +168,33 @@ const Post = () => {
             dangerouslySetInnerHTML={{ __html: post.content }}
             className="max-w-5xl w-full mx-auto post-content"
           ></div>
-        </main>
-      )}
 
-      {/* Comments setion */}
-      <div className="flex flex-col w-full max-w-3xl mx-auto self-start p-2 mt-2 gap-4">
-        <CommentsList postId={post._id} ref={commentsRef} />
-      </div>
-      {loadingPostsByCategory ? (
-        <LoadingSpinner />
-      ) : (
-        <div>
-          {postsByCategory.length === 0 ? (
-            <Alert status={"failure"}>{errorPostsByCategory}</Alert>
+          {/* Comments setion */}
+          <div className="flex flex-col w-full max-w-3xl mx-auto self-start p-2 mt-2 gap-4">
+            <CommentsList postId={post._id} ref={commentsRef} />
+          </div>
+
+          {/* More posts from this category */}
+
+          {loadingPostsByCategory ? (
+            <LoadingSpinner />
           ) : (
-            <div className="flex flex-col justify-center items-center border-t-2 border-black p-4 w-full">
-              <h1 className="text-xl font-semibold p-2 mb-4 italic">
-                More posts from {post.category} category
-              </h1>
-              <PostsList
-                posts={postsByCategory.filter((p) => p._id !== post._id)}
-              />
+            <div>
+              {postsByCategory.length === 0 ? (
+                <Alert status={"failure"}>{errorPostsByCategory}</Alert>
+              ) : (
+                <div className="flex flex-col justify-center items-center border-t-2 border-black p-4 w-full">
+                  <h1 className="text-xl font-semibold p-2 mb-4 italic">
+                    More posts from {post.category} category
+                  </h1>
+                  <PostsList
+                    posts={postsByCategory.filter((p) => p._id !== post._id)}
+                  />
+                </div>
+              )}
             </div>
           )}
-        </div>
+        </main>
       )}
     </div>
   );

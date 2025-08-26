@@ -80,11 +80,17 @@ const Post = () => {
 
   useEffect(() => {
     if (location.state?.fromSignin) {
-      requestAnimationFrame(() => {
+      setTimeout(() => {
         commentsRef.current?.scrollIntoView({
           behavior: "smooth",
         });
-      });
+      }, 1000);
+
+      // requestAnimationFrame(() => {
+      //   commentsRef.current?.scrollIntoView({
+      //     behavior: "smooth",
+      //   });
+      // });
     }
   }, [location]);
 

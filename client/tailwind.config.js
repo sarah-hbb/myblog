@@ -15,6 +15,10 @@ module.exports = {
       animation: {
         reveal: "reveal 500ms ease-in-out",
         dropdown: "dropdown 300ms ease-in-out",
+        slideRight: "slideRight 1s linear infinite",
+        slideDown: "slideDown 1s linear infinite",
+        slideLeft: "slidLeft 1s linear infinite",
+        slideUp: "slideUp 1s linear infinite",
       },
       keyframes: {
         reveal: {
@@ -37,6 +41,22 @@ module.exports = {
             transform: "translateY(0)",
             opacity: "1",
           },
+        },
+        slideRight: {
+          "0%": { left: "-100%" },
+          "50%, 100%": { left: "100%" },
+        },
+        slideDown: {
+          "0%": { top: "-100%" },
+          "50%, 100%": { top: "100%" },
+        },
+        slidLeft: {
+          "0%": { right: "-100%" },
+          "50%, 100%": { right: "100%" },
+        },
+        slideUp: {
+          "0%": { bottom: "-100%" },
+          "50%, 100%": { bottom: "100%" },
         },
       },
     },

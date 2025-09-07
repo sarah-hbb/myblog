@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-//import ReactQuill from "react-quill";
+import ReactQuill from "react-quill";
 import TextEditor from "../components/textEditor/TextEditor";
 import "react-quill/dist/quill.snow.css";
 import Input from "../components/ui/Input";
@@ -203,17 +203,17 @@ const UpdatePost = () => {
           )}
         </div>
 
-        {/* <ReactQuill
+        <ReactQuill
+          value={formData.content}
           theme="snow"
           onChange={(value) => setFormData({ ...formData, content: value })}
           placeholder="Write your post..."
-          value={formData.content}
-        /> */}
+        />
 
-        <TextEditor
+        {/* <TextEditor
           content={formData.content}
           onChange={(value) => setFormData({ ...formData, content: value })}
-        />
+        /> */}
 
         {publishError && <Alert status="failure">{publishError}</Alert>}
         <Button type="submit" className="w-1/5 self-end">

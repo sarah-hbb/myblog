@@ -19,6 +19,8 @@ module.exports = {
         slideDown: "slideDown 1s linear infinite",
         slideLeft: "slidLeft 1s linear infinite",
         slideUp: "slideUp 1s linear infinite",
+        slideRightToView: "slideRightToView 1s ease-in-out forwards",
+        slideDownToView: "slideDownToView 1s ease-in-out forwards",
       },
       keyframes: {
         reveal: {
@@ -57,6 +59,14 @@ module.exports = {
         slideUp: {
           "0%": { bottom: "-100%" },
           "50%, 100%": { bottom: "100%" },
+        },
+        slideRightToView: {
+          "0%": { left: "-100%" },
+          "100%": { left: "0" },
+        },
+        slideDownToView: {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(0)" },
         },
       },
     },

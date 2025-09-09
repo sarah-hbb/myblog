@@ -142,6 +142,7 @@ const Post = () => {
             <h1
               className="absolute mx-4 top-[20%] max-w-7xl text-xl sm:text-6xl text-left 
             font-bold italic text-slate-200 bg-cyan-600 bg-opacity-20 p-4 rounded shadow-lg
+            animate-slideRightToView
             "
             >
               {post.title}
@@ -150,24 +151,23 @@ const Post = () => {
             {/* Edit post button - only visible to admin */}
             {currentUser && currentUser.isAdmin && (
               <div className="absolute bottom-8 right-4">
-                <NeonButton>
+                <Button variant="secondary" size="lg">
                   <Link to={`/update-post/${post._id}`}>Edit post</Link>
-                </NeonButton>
+                </Button>
               </div>
             )}
           </div>
 
           {/* {Post content and comments section} + category section */}
-          <div className="mx-7 flex flex-col sm:flex-row gap-4 sm:gap-6 sm:items-start">
+          <div className=" p-5 w-full flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-start">
             {/* Post content and comments section */}
-            <div className="relative w-2/3 sm:-top-[20vh] -top-0">
+            <div className="relative overflow-hidden sm:w-2/3 sm:-top-[20vh] -top-0 animate-slideRightToView">
               {/* Post content */}
               <div
                 // post-content class added to style innerHTML of post content. you can style it in index.css file
                 dangerouslySetInnerHTML={{ __html: post.content }}
                 className=" post-content p-6 
-              text-slate-200 sm:bg-cyan-600 sm:bg-opacity-20 
-              sm:rounded "
+              text-slate-200 sm:bg-cyan-600 sm:bg-opacity-20 sm:rounded "
               ></div>
 
               {/* Comments setion */}
@@ -180,13 +180,13 @@ const Post = () => {
             {loadingPostsByCategory ? (
               <LoadingSpinner />
             ) : (
-              <div>
+              <div className="sm:w-1/3 w-full">
                 {postsByCategory.length === 0 ? (
                   <Alert status={"failure"}>{errorPostsByCategory}</Alert>
                 ) : (
                   <div
-                    className="bg-cyan-200  bg-opacity-10 flex flex-col justify-center 
-                  border-t-2 border-white p-6 my-4"
+                    className=" bg-cyan-200 bg-opacity-10 flex flex-col justify-center 
+                  border-t-2 border-white p-6 my-4 overflow-hidden animate-slideDownToView"
                   >
                     <h1 className="text-2xl font-bold text-slate-200 italic mb-4">
                       More posts from {post.category} category

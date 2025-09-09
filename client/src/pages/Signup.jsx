@@ -99,7 +99,7 @@ const Signup = () => {
           />
           {errorMessage && <h2 className="text-red-600">{errorMessage}</h2>}
 
-          <Button disabled={loading} type="submit" inverseColor={false}>
+          <Button disabled={loading} type="submit" variant="primary">
             {loading ? (
               <div className="flex justify-center items-center">
                 <LoadingSpinner size={"small"} />

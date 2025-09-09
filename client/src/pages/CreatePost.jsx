@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 // in case of using React-quill
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
-import TextEditor from "../components/textEditor/TextEditor";
+//import TextEditor from "../components/textEditor/TextEditor";
 
 // UI
 import Input from "../components/ui/Input";
@@ -169,9 +169,8 @@ const CreatePost = () => {
             />
 
             <Button
-              type="button"
+              variant="primary"
               onClick={handleUploadImage}
-              inverseColor={true}
               disabled={imageUploadProgress}
             >
               <span>Upload Image</span>
@@ -210,7 +209,7 @@ const CreatePost = () => {
         /> */}
 
         {publishError && <Alert status="failure">{publishError}</Alert>}
-        <Button type="submit" className="w-1/5 self-end">
+        <Button type="submit" variant="neon" className="self-end">
           Publish
         </Button>
       </form>

@@ -40,7 +40,7 @@ const OAuth = () => {
     }
   };
   return (
-    <Button type="button" inverseColor onClick={handleGoogleClick}>
+    <Button variant="secondary" onClick={handleGoogleClick}>
       <div className=" inline-flex">
         <FcGoogle className=" text-2xl mr-4" />
         Continue with Google

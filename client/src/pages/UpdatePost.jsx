@@ -174,9 +174,8 @@ const UpdatePost = () => {
             />
 
             <Button
-              type="button"
               onClick={handleUploadImage}
-              inverseColor={true}
+              variant="secondary"
               disabled={imageUploadProgress}
             >
               <span>Upload Image</span>

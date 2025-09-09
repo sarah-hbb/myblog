@@ -110,7 +110,7 @@ const Signup = () => {
             )}
           </Button>
           <OAuth />
-          <h3>
+          <h3 className="self-start">
             Have an account?
             <span>
               <TextLink path={"/signin"} className={"text-blue-400"}>

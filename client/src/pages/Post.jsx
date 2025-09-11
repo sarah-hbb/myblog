@@ -4,13 +4,12 @@ import { useSelector } from "react-redux";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import Alert from "../components/ui/Alert";
 import CommentsList from "../components/comment/CommentsList";
-import PostsList from "../components/post/PostsList";
+
 import { PiBookmarkSimpleDuotone } from "react-icons/pi";
 import useBookmark from "../hooks/useBookmark";
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css"; // Monokai theme
 import Button from "../components/ui/Button";
-import NeonButton from "../components/ui/NeonButton";
 
 const Post = () => {
   const { postSlug } = useParams();
@@ -87,7 +86,7 @@ const Post = () => {
         commentsRef.current?.scrollIntoView({
           behavior: "smooth",
         });
-      }, 1000);
+      }, 1500);
     }
   }, [location]);
 
@@ -159,9 +158,9 @@ const Post = () => {
           </div>
 
           {/* {Post content and comments section} + category section */}
-          <div className=" p-5 w-full flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-start">
+          <div className="p-5 w-full flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-start">
             {/* Post content and comments section */}
-            <div className="relative overflow-hidden sm:w-2/3 sm:-top-[20vh] -top-0 animate-slideRightToView">
+            <div className="relative overflow-hidden sm:w-2/3 sm:-top-[20vh] animate-slideRightToView">
               {/* Post content */}
               <div
                 // post-content class added to style innerHTML of post content. you can style it in index.css file
@@ -186,7 +185,7 @@ const Post = () => {
                 ) : (
                   <div
                     className=" bg-cyan-200 bg-opacity-10 flex flex-col justify-center 
-                  border-t-2 border-white p-6 my-4 overflow-hidden animate-slideDownToView"
+                    border-t-2 border-white p-6 my-4 overflow-hidden animate-slideDownToView"
                   >
                     <h1 className="text-2xl font-bold text-slate-200 italic mb-4">
                       More posts from {post.category} category

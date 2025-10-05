@@ -32,7 +32,7 @@ function AuthForm({ page, onSubmitForm, errorMessage, loading }) {
     <div className={`relative flex items-center justify-center`}>
       <img
         src={bg}
-        class="absolute inset-0 w-full h-full object-cover blur-sm brightness-[20%] flex items-center justify-center "
+        class="absolute inset-0 w-full h-full object-cover blur-sm brightness-[50%] flex items-center justify-center "
       />
 
       <div

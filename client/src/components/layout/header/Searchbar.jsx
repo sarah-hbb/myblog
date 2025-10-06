@@ -36,7 +36,7 @@ const Searchbar = () => {
         border-none outline-none text-cyan-100 not-placeholder-shown:bg-transparent"
         type="text"
         name="search"
-        placeholder="search..."
+        placeholder="search in blog..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />

@@ -5,7 +5,7 @@ const NavLinks = ({ className, isInSideBar }) => {
   const { currentUser } = useSelector((state) => state.user);
   return (
     <div className={className}>
-      <TextLink path="/" isInSideBar={isInSideBar}>
+      <TextLink path="/blog" isInSideBar={isInSideBar}>
         Blog
       </TextLink>
       <TextLink path="/about" isInSideBar={isInSideBar}>

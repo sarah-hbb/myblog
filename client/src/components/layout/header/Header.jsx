@@ -20,7 +20,7 @@ const Header = () => {
           className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-l
         from-cyan-50 to-cyan-400 text-nowrap hover:scale-105 transition-all ease-in-out"
         >
-          My Blog
+          Portfolio
         </h1>
       </Link>
       <Searchbar />

@@ -21,6 +21,7 @@ module.exports = {
         slideUp: "slideUp 1s linear infinite",
         slideRightToView: "slideRightToView 1s ease-in-out forwards",
         slideDownToView: "slideDownToView 1s ease-in-out forwards",
+        wordSlide: "wordSlide 12s infinite",
       },
       keyframes: {
         reveal: {
@@ -67,6 +68,13 @@ module.exports = {
         slideDownToView: {
           "0%": { transform: "translateY(-100%)" },
           "100%": { transform: "translateY(0)" },
+        },
+        wordSlide: {
+          "0%,15%": { transform: "translateY(0%)" },
+          "20%, 35%": { transform: "translateY(-100%)" },
+          "40%, 55%": { transform: "translateY(-200%)" },
+          "60%, 75%": { transform: "translateY(-300%)" },
+          "80%, 95%": { transform: "translateY(-400%)" },
         },
       },
     },

@@ -1,6 +1,6 @@
 const PerspectiveText = () => {
   return (
-    <div className="flex min-h-full pt-24 pb-32 mb-8 group ">
+    <div className="flex min-h-full md:pt-24 pl-6 pt-10 md:pb-32 pb-3 group ">
       <ul
         className={`
         text-cyan-200 

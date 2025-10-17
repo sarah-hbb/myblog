@@ -1,6 +1,7 @@
 import Hero from "../components/portfolio/Hero";
 import PerspectiveText from "../components/portfolio/PerspectiveText";
 import ThreeD from "../components/portfolio/ThreeD";
+import FeatureCards from "../components/portfolio/sections/FeatureCards";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
         </figure>
       </div>
       <Hero />
+      <FeatureCards />
     </main>
   );
 };

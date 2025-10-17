@@ -4,7 +4,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative overflow-hidden flex mx-auto sm:max-w-7xl w-full p-8 animate-slideRightToView"
+      className="relative overflow-hidden flex mx-auto sm:max-w-5xl w-full p-8 animate-slideRightToView"
     >
       <div className="p-5 text-cyan-200 sm:[&_h1]:text-3xl text-2xl font-extralight ">
         <h1 className="mb-2 text-amber-300 font-bold italic">

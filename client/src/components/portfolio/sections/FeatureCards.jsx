@@ -1,3 +1,5 @@
+import TitleHeader from "../../ui/TitleHeader";
+
 const abilities = [
   {
     title: "Quality Focus",
@@ -40,6 +42,10 @@ const abilities = [
 const FeatureCards = () => {
   return (
     <section className="w-full max-w-7xl mx-auto">
+      <TitleHeader
+        title="Core Abilities"
+        sub={"What I bring to your project?"}
+      />
       <div className="grid-cols-1 md:grid-cols-3 sm:grid-cols-2 grid gap-5 px-5 text-cyan-100">
         {abilities.map((ability, index) => (
           <div

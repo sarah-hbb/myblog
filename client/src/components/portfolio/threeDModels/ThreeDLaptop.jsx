@@ -1,8 +1,8 @@
 import { Canvas } from "@react-three/fiber";
 import { useMediaQuery } from "react-responsive";
 import { Center, OrbitControls } from "@react-three/drei";
-import Laptop from "../../assets/models/Laptop";
-const ThreeD = () => {
+import Laptop from "../../../assets/models/Laptop";
+const ThreeDLaptop = () => {
   const isTablet = useMediaQuery({ query: "(max-width: 1023px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 480px)" });
 
@@ -31,4 +31,4 @@ const ThreeD = () => {
   );
 };
 
-export default ThreeD;
+export default ThreeDLaptop;

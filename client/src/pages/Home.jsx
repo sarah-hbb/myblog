@@ -3,6 +3,7 @@ import PerspectiveText from "../components/portfolio/PerspectiveText";
 import ThreeDLaptop from "../components/portfolio/threeDModels/ThreeDLaptop";
 import FeatureCards from "../components/portfolio/sections/FeatureCards";
 import Stack from "../components/portfolio/sections/Stack";
+import GlowCard from "../components/ui/GlowCard";
 
 const Home = () => {
   return (

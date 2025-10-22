@@ -1,3 +1,4 @@
+import HomeSection from "../../layout/HomeSection";
 import TitleHeader from "../../ui/TitleHeader";
 const techStackIcons = [
   {
@@ -38,11 +39,10 @@ const techStackIcons = [
 
 const Stack = () => {
   return (
-    <section className="w-full mt-4 max-w-7xl mx-auto">
-      <TitleHeader
-        title="Technology Stack"
-        sub={"Skills I bring to the table?"}
-      />
+    <HomeSection
+      title={"Technology Stack"}
+      sub={"Skills I bring to the table?"}
+    >
       <div className="flex flex-wrap justify-center gap-8 p-4">
         {techStackIcons.map((icon) => (
           <div key={icon.name} className="flex flex-col items-center">
@@ -57,7 +57,7 @@ const Stack = () => {
           </div>
         ))}
       </div>
-    </section>
+    </HomeSection>
   );
 };
 

@@ -1,15 +1,11 @@
 import GlowCard from "../../ui/GlowCard";
-import TitleHeader from "../../ui/TitleHeader";
+import HomeSection from "../../layout/HomeSection";
 
 const FeatureCards = () => {
   return (
-    <section className="w-full max-w-7xl mx-auto">
-      <TitleHeader
-        title="Core Abilities"
-        sub={"What I bring to your project?"}
-      />
+    <HomeSection title="Core Abilities" sub={"What I bring to your project?"}>
       <GlowCard />
-    </section>
+    </HomeSection>
   );
 };
 

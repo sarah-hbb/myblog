@@ -3,7 +3,9 @@ import PerspectiveText from "../components/portfolio/PerspectiveText";
 import ThreeDLaptop from "../components/portfolio/threeDModels/ThreeDLaptop";
 import FeatureCards from "../components/portfolio/sections/FeatureCards";
 import Stack from "../components/portfolio/sections/Stack";
-import GlowCard from "../components/ui/GlowCard";
+
+import Experience from "../components/portfolio/sections/Experience";
+import ContactMe from "../components/portfolio/sections/ContactMe";
 
 const Home = () => {
   return (
@@ -17,6 +19,8 @@ const Home = () => {
       <Hero />
       <FeatureCards />
       <Stack />
+      <Experience />
+      <ContactMe />
     </main>
   );
 };

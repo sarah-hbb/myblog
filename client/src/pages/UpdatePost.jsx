@@ -47,6 +47,8 @@ const UpdatePost = () => {
     fetchPostById();
   }, [postId]);
 
+  console.log(formData);
+
   const handleChangeImageFile = (e) => {
     setFile(e.target.files[0]);
     setImageUploadError(null);
@@ -148,14 +150,20 @@ const UpdatePost = () => {
             id="title"
             defaultValue={""}
             onChange={(e) => {
-              setFormData({ ...formData, title: e.target.value });
+              setFormData((prvFormData) => ({
+                ...prvFormData,
+                title: e.target.value,
+              }));
             }}
           />
           <Select
             className="sm:w-3/5"
             options={categoryOptions}
             onChange={(e) => {
-              setFormData({ ...formData, category: e.target.value });
+              setFormData((prvFormData) => ({
+                ...prvFormData,
+                category: e.target.value,
+              }));
             }}
             value={formData.category}
           />
@@ -205,7 +213,9 @@ const UpdatePost = () => {
         <ReactQuill
           value={formData.content}
           theme="snow"
-          onChange={(value) => setFormData({ ...formData, content: value })}
+          onChange={(value) =>
+            setFormData((prvFormData) => ({ ...prvFormData, content: value }))
+          }
           placeholder="Write your post..."
         />
 

@@ -8,10 +8,6 @@ const NavLinks = ({ className, isInSideBar }) => {
       <TextLink path="/blog" isInSideBar={isInSideBar}>
         Blog
       </TextLink>
-      <TextLink path="/about" isInSideBar={isInSideBar}>
-        {" "}
-        Me{" "}
-      </TextLink>
       {currentUser && currentUser.isAdmin && (
         <TextLink path="/create-post" isInSideBar={isInSideBar}>
           Create Post

@@ -135,6 +135,37 @@ const UpdatePost = () => {
     { value: "github", label: "Git-hub" },
     { value: "travel", label: "Travel" },
   ];
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image"],
+      ["clean"],
+      ["blockquote", "code-block"],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "code-block",
+    "list",
+    "bullet",
+    "link",
+    "image",
+  ];
+
   return (
     <div
       className="flex flex-col justify-center items-center
@@ -213,6 +244,8 @@ const UpdatePost = () => {
         <ReactQuill
           value={formData.content}
           theme="snow"
+          modules={modules}
+          formats={formats}
           onChange={(value) =>
             setFormData((prvFormData) => ({ ...prvFormData, content: value }))
           }

@@ -125,9 +125,23 @@ const CreatePost = () => {
       ],
       ["link", "image"],
       ["clean"],
-      ["code-block"],
+      ["blockquote", "code-block"],
     ],
   };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "code-block",
+    "list",
+    "bullet",
+    "link",
+    "image",
+  ];
 
   return (
     <div
@@ -200,6 +214,8 @@ const CreatePost = () => {
         <ReactQuill
           value={formData.content}
           theme="snow"
+          modules={modules}
+          formats={formats}
           onChange={(value) => setFormData({ ...formData, content: value })}
           placeholder="Write your post..."
         />

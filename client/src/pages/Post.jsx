@@ -25,6 +25,7 @@ const Post = () => {
   const { handleBookmark } = useBookmark();
   const location = useLocation();
   const commentsRef = useRef(null);
+  const contentRef = useRef(null);
 
   const fetchPostBySlug = async () => {
     try {
@@ -92,9 +93,11 @@ const Post = () => {
 
   // Apply highlight.js to all <pre><code> blocks after rendering
   useEffect(() => {
-    document.querySelectorAll("pre code").forEach((block) => {
-      hljs.highlightBlock(block);
-    });
+    if (contentRef.current) {
+      contentRef.current.querySelectorAll("code.ql-syntax").forEach((block) => {
+        hljs.highlightElement(block);
+      });
+    }
   }, [post]);
 
   return (
@@ -163,6 +166,7 @@ const Post = () => {
             <div className="relative overflow-hidden sm:w-2/3 sm:-top-[20vh] animate-slideRightToView">
               {/* Post content */}
               <div
+                ref={contentRef}
                 // post-content class added to style innerHTML of post content. you can style it in index.css file
                 dangerouslySetInnerHTML={{ __html: post.content }}
                 className=" post-content p-6 
